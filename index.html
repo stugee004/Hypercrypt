@@ -1,4 +1,4 @@
-```html
+```html id="p6qz0w"
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,109 +13,850 @@
 
     <title>HyperCrypt</title>
 
+
+    <style>
+
+        /* =====================================================
+           GENERAL
+           ===================================================== */
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            padding: 40px 20px;
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            background: #0b0f14;
+
+            color: #e8eef5;
+        }
+
+
+        .container {
+
+            max-width: 1000px;
+
+            margin: 0 auto;
+        }
+
+
+        /* =====================================================
+           HEADER
+           ===================================================== */
+
+        header {
+
+            text-align: center;
+
+            margin-bottom: 35px;
+        }
+
+
+        h1 {
+
+            margin: 0;
+
+            font-size: 48px;
+
+            letter-spacing: 5px;
+        }
+
+
+        .subtitle {
+
+            margin-top: 8px;
+
+            color: #8d9aaa;
+
+            font-size: 16px;
+        }
+
+
+        /* =====================================================
+           PANELS
+           ===================================================== */
+
+        .panel {
+
+            background: #121821;
+
+            border: 1px solid #26313d;
+
+            border-radius: 12px;
+
+            padding: 25px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .panel h2 {
+
+            margin-top: 0;
+
+            font-size: 20px;
+        }
+
+
+        /* =====================================================
+           INPUTS
+           ===================================================== */
+
+        label {
+
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-weight: 600;
+        }
+
+
+        textarea,
+        input {
+
+            width: 100%;
+
+            background: #080c11;
+
+            color: #e8eef5;
+
+            border: 1px solid #2c3947;
+
+            border-radius: 8px;
+
+            padding: 13px;
+
+            font-family:
+                "SFMono-Regular",
+                Consolas,
+                monospace;
+
+            font-size: 14px;
+
+            outline: none;
+        }
+
+
+        textarea {
+
+            min-height: 150px;
+
+            resize: vertical;
+        }
+
+
+        textarea:focus,
+        input:focus {
+
+            border-color: #6b7f95;
+        }
+
+
+        .field {
+
+            margin-bottom: 20px;
+        }
+
+
+        /* =====================================================
+           BUTTONS
+           ===================================================== */
+
+        .button-row {
+
+            display: flex;
+
+            gap: 12px;
+
+            flex-wrap: wrap;
+        }
+
+
+        button {
+
+            border: none;
+
+            border-radius: 8px;
+
+            padding: 12px 22px;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            background: #e8eef5;
+
+            color: #0b0f14;
+        }
+
+
+        button:hover {
+
+            opacity: 0.85;
+        }
+
+
+        button:disabled {
+
+            opacity: 0.45;
+
+            cursor: not-allowed;
+        }
+
+
+        .secondary {
+
+            background: #26313d;
+
+            color: #e8eef5;
+        }
+
+
+        /* =====================================================
+           OUTPUT
+           ===================================================== */
+
+        .output {
+
+            min-height: 150px;
+
+            white-space: pre-wrap;
+
+            word-break: break-all;
+
+            background: #080c11;
+
+            border: 1px solid #2c3947;
+
+            border-radius: 8px;
+
+            padding: 15px;
+
+            font-family:
+                "SFMono-Regular",
+                Consolas,
+                monospace;
+
+            font-size: 13px;
+
+            color: #b9c7d6;
+        }
+
+
+        /* =====================================================
+           STATUS
+           ===================================================== */
+
+        #status {
+
+            padding: 12px;
+
+            border-radius: 8px;
+
+            background: #080c11;
+
+            border: 1px solid #26313d;
+
+            margin-bottom: 20px;
+
+            font-family:
+                "SFMono-Regular",
+                Consolas,
+                monospace;
+
+            font-size: 13px;
+        }
+
+
+        /* =====================================================
+           SYSTEM STATUS
+           ===================================================== */
+
+        .system-status {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(180px, 1fr)
+                );
+
+            gap: 10px;
+        }
+
+
+        .status-item {
+
+            background: #080c11;
+
+            border: 1px solid #26313d;
+
+            border-radius: 8px;
+
+            padding: 12px;
+
+            font-family:
+                "SFMono-Regular",
+                Consolas,
+                monospace;
+
+            font-size: 13px;
+        }
+
+
+        /* =====================================================
+           FOOTER
+           ===================================================== */
+
+        footer {
+
+            text-align: center;
+
+            color: #687687;
+
+            font-size: 12px;
+
+            margin-top: 30px;
+        }
+
+
+    </style>
+
 </head>
 
 
 <body>
 
-    <h1>HyperCrypt</h1>
 
-    <p>
-        Cryptographic encoder/decoder development version
-    </p>
-
-
-    <hr>
-
-
-    <h2>System Test</h2>
-
-    <p>
-        Open your browser's developer console and run:
-    </p>
-
-    <pre>HyperCrypt.selfTest()</pre>
-
-    <p>
-        Then run:
-    </p>
-
-    <pre>HyperMath.selfTest()</pre>
-
-
-    <hr>
-
-
-    <h2>Loaded Components</h2>
-
-    <p id="cryptStatus">
-        Checking crypt.js...
-    </p>
-
-    <p id="mathStatus">
-        Checking hypermath.js...
-    </p>
+<div class="container">
 
 
     <!-- =====================================================
-         HYPERCRYPT JAVASCRIPT FILES
-         =====================================================
-
-         IMPORTANT:
-         crypt.js MUST load before hypermath.js.
-
-         We will add encoder.js and decoder.js later.
+         HEADER
          ===================================================== -->
 
+    <header>
 
-    <script src="crypt.js"></script>
-    <script src="hypermath.js"></script>
-    <script src="encoder.js"></script>
-    <script src="decoder.js"></script>
+        <h1>HYPERCRYPT</h1>
+
+        <div class="subtitle">
+            AES-256-GCM + HyperMath
+        </div>
+
+    </header>
 
 
     <!-- =====================================================
-         COMPONENT CHECK
+         STATUS
          ===================================================== -->
 
-    <script>
+    <div id="status">
+        Ready.
+    </div>
 
-        // Check crypt.js
 
-        if (typeof HyperCrypt !== "undefined") {
+    <!-- =====================================================
+         MESSAGE
+         ===================================================== -->
 
-            document.getElementById(
-                "cryptStatus"
-            ).textContent =
-                "✓ crypt.js loaded successfully.";
+    <section class="panel">
 
-        } else {
+        <h2>Message</h2>
 
-            document.getElementById(
-                "cryptStatus"
-            ).textContent =
-                "✗ crypt.js could not be loaded.";
+
+        <div class="field">
+
+            <label for="message">
+                Message
+            </label>
+
+            <textarea
+                id="message"
+                placeholder="Enter a message..."
+            ></textarea>
+
+        </div>
+
+
+        <div class="field">
+
+            <label for="password">
+                Password
+            </label>
+
+            <input
+                id="password"
+                type="password"
+                placeholder="Enter encryption password..."
+            >
+
+        </div>
+
+
+        <div class="button-row">
+
+            <button
+                id="encodeButton"
+                type="button"
+            >
+                ENCODE
+            </button>
+
+
+            <button
+                id="decodeButton"
+                type="button"
+                class="secondary"
+            >
+                DECODE
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         ENCODED DATA
+         ===================================================== -->
+
+    <section class="panel">
+
+        <h2>Encoded Data</h2>
+
+
+        <div
+            id="encodedOutput"
+            class="output"
+        >
+            No encoded data yet.
+        </div>
+
+
+        <br>
+
+
+        <button
+            id="copyButton"
+            type="button"
+            class="secondary"
+        >
+            COPY ENCODED DATA
+        </button>
+
+    </section>
+
+
+    <!-- =====================================================
+         DECODED MESSAGE
+         ===================================================== -->
+
+    <section class="panel">
+
+        <h2>Decoded Message</h2>
+
+
+        <div
+            id="decodedOutput"
+            class="output"
+        >
+            No decoded message yet.
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         SYSTEM STATUS
+         ===================================================== -->
+
+    <section class="panel">
+
+        <h2>System</h2>
+
+
+        <div class="system-status">
+
+            <div
+                class="status-item"
+                id="cryptStatus"
+            >
+                Checking crypt.js...
+            </div>
+
+
+            <div
+                class="status-item"
+                id="mathStatus"
+            >
+                Checking hypermath.js...
+            </div>
+
+
+            <div
+                class="status-item"
+                id="encoderStatus"
+            >
+                Checking encoder.js...
+            </div>
+
+
+            <div
+                class="status-item"
+                id="decoderStatus"
+            >
+                Checking decoder.js...
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <footer>
+
+        HyperCrypt development build
+
+    </footer>
+
+
+</div>
+
+
+<!-- =========================================================
+     JAVASCRIPT FILES
+     ========================================================= -->
+
+<script src="crypt.js"></script>
+
+<script src="hypermath.js"></script>
+
+<script src="encoder.js"></script>
+
+<script src="decoder.js"></script>
+
+
+<!-- =========================================================
+     INTERFACE JAVASCRIPT
+     ========================================================= -->
+
+<script>
+
+"use strict";
+
+
+const messageInput =
+    document.getElementById(
+        "message"
+    );
+
+
+const passwordInput =
+    document.getElementById(
+        "password"
+    );
+
+
+const encodedOutput =
+    document.getElementById(
+        "encodedOutput"
+    );
+
+
+const decodedOutput =
+    document.getElementById(
+        "decodedOutput"
+    );
+
+
+const status =
+    document.getElementById(
+        "status"
+    );
+
+
+const encodeButton =
+    document.getElementById(
+        "encodeButton"
+    );
+
+
+const decodeButton =
+    document.getElementById(
+        "decodeButton"
+    );
+
+
+const copyButton =
+    document.getElementById(
+        "copyButton"
+    );
+
+
+// ===========================================================
+// SYSTEM STATUS
+// ===========================================================
+
+
+document.getElementById(
+    "cryptStatus"
+).textContent =
+    typeof HyperCrypt !== "undefined"
+        ? "✓ crypt.js"
+        : "✗ crypt.js";
+
+
+document.getElementById(
+    "mathStatus"
+).textContent =
+    typeof HyperMath !== "undefined"
+        ? "✓ hypermath.js"
+        : "✗ hypermath.js";
+
+
+document.getElementById(
+    "encoderStatus"
+).textContent =
+    typeof HyperEncoder !== "undefined"
+        ? "✓ encoder.js"
+        : "✗ encoder.js";
+
+
+document.getElementById(
+    "decoderStatus"
+).textContent =
+    typeof HyperDecoder !== "undefined"
+        ? "✓ decoder.js"
+        : "✗ decoder.js";
+
+
+// ===========================================================
+// ENCODE
+// ===========================================================
+
+
+encodeButton.addEventListener(
+    "click",
+    async function () {
+
+        const message =
+            messageInput.value;
+
+
+        const password =
+            passwordInput.value;
+
+
+        if (message.length === 0) {
+
+            status.textContent =
+                "Error: enter a message.";
+
+            return;
         }
 
 
-        // Check hypermath.js
+        if (password.length === 0) {
 
-        if (typeof HyperMath !== "undefined") {
+            status.textContent =
+                "Error: enter a password.";
 
-            document.getElementById(
-                "mathStatus"
-            ).textContent =
-                "✓ hypermath.js loaded successfully.";
-
-        } else {
-
-            document.getElementById(
-                "mathStatus"
-            ).textContent =
-                "✗ hypermath.js could not be loaded.";
+            return;
         }
 
-    </script>
+
+        try {
+
+            status.textContent =
+                "Encoding...";
+
+
+            encodeButton.disabled = true;
+
+
+            const encoded =
+                await HyperEncoder.encode(
+                    message,
+                    password
+                );
+
+
+            encodedOutput.textContent =
+                encoded;
+
+
+            status.textContent =
+                "Encoding complete.";
+
+
+        } catch (error) {
+
+            console.error(error);
+
+
+            status.textContent =
+                "Encoding error: " +
+                error.message;
+
+
+        } finally {
+
+            encodeButton.disabled = false;
+        }
+
+    }
+);
+
+
+// ===========================================================
+// DECODE
+// ===========================================================
+
+
+decodeButton.addEventListener(
+    "click",
+    async function () {
+
+        const encoded =
+            encodedOutput.textContent;
+
+
+        const password =
+            passwordInput.value;
+
+
+        if (
+            !encoded ||
+            encoded ===
+            "No encoded data yet."
+        ) {
+
+            status.textContent =
+                "Error: there is no encoded data.";
+
+            return;
+        }
+
+
+        if (password.length === 0) {
+
+            status.textContent =
+                "Error: enter the password.";
+
+            return;
+        }
+
+
+        try {
+
+            status.textContent =
+                "Decoding...";
+
+
+            decodeButton.disabled = true;
+
+
+            const decoded =
+                await HyperDecoder.decode(
+                    encoded,
+                    password
+                );
+
+
+            decodedOutput.textContent =
+                decoded;
+
+
+            status.textContent =
+                "Decoding complete.";
+
+
+        } catch (error) {
+
+            console.error(error);
+
+
+            decodedOutput.textContent =
+                "Unable to decode.";
+
+
+            status.textContent =
+                "Decoding error: " +
+                error.message;
+
+
+        } finally {
+
+            decodeButton.disabled = false;
+        }
+
+    }
+);
+
+
+// ===========================================================
+// COPY
+// ===========================================================
+
+
+copyButton.addEventListener(
+    "click",
+    async function () {
+
+        const encoded =
+            encodedOutput.textContent;
+
+
+        if (
+            !encoded ||
+            encoded ===
+            "No encoded data yet."
+        ) {
+
+            status.textContent =
+                "Nothing to copy.";
+
+            return;
+        }
+
+
+        try {
+
+            await navigator.clipboard.writeText(
+                encoded
+            );
+
+
+            status.textContent =
+                "Encoded data copied.";
+
+        } catch (error) {
+
+            status.textContent =
+                "Could not copy encoded data.";
+
+        }
+
+    }
+);
+
+
+</script>
 
 
 </body>
