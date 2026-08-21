@@ -545,6 +545,98 @@ button:disabled {
     word-break: break-word;
 }
 
+    <section class="panel">
+
+<h2>Security Diagnostics</h2>
+
+<p style="
+    color: #687687;
+    font-size: 13px;
+    line-height: 1.6;
+">
+These diagnostics verify expected cryptographic behavior.
+A passing test does not constitute a formal security audit.
+</p>
+
+<div class="tech-grid">
+
+<div class="tech-item">
+
+<div class="tech-label">
+Round Trip
+</div>
+
+<div
+    class="tech-value"
+    id="securityRoundTrip"
+>
+NOT TESTED
+</div>
+
+</div>
+
+
+<div class="tech-item">
+
+<div class="tech-label">
+Wrong Password
+</div>
+
+<div
+    class="tech-value"
+    id="securityPassword"
+>
+NOT TESTED
+</div>
+
+</div>
+
+
+<div class="tech-item">
+
+<div class="tech-label">
+Tamper Detection
+</div>
+
+<div
+    class="tech-value"
+    id="securityTamper"
+>
+NOT TESTED
+</div>
+
+</div>
+
+
+<div class="tech-item">
+
+<div class="tech-label">
+Randomization
+</div>
+
+<div
+    class="tech-value"
+    id="securityRandom"
+>
+NOT TESTED
+</div>
+
+</div>
+
+</div>
+
+
+<br>
+
+
+<button
+    id="securityTestButton"
+    type="button"
+>
+RUN SECURITY DIAGNOSTICS
+</button>
+
+</section>
 
 /* =========================================================
    SYSTEM
@@ -1113,13 +1205,10 @@ HyperCrypt development build
      ===================================================== -->
 
 <script src="crypt.js"></script>
-
 <script src="hypermath.js"></script>
-
 <script src="encoder.js"></script>
-
 <script src="decoder.js"></script>
-
+<script src="security.js"></script>
 
 <!-- =====================================================
      INTERFACE JAVASCRIPT
@@ -1679,6 +1768,130 @@ encodeButton.addEventListener(
     }
 );
 
+// ==========================================================
+// SECURITY DIAGNOSTICS
+// ==========================================================
+
+
+const securityTestButton =
+    document.getElementById(
+        "securityTestButton"
+    );
+
+
+const securityRoundTrip =
+    document.getElementById(
+        "securityRoundTrip"
+    );
+
+
+const securityPassword =
+    document.getElementById(
+        "securityPassword"
+    );
+
+
+const securityTamper =
+    document.getElementById(
+        "securityTamper"
+    );
+
+
+const securityRandom =
+    document.getElementById(
+        "securityRandom"
+    );
+
+
+securityTestButton.addEventListener(
+    "click",
+    async function () {
+
+        securityTestButton.disabled =
+            true;
+
+
+        status.textContent =
+            "RUNNING SECURITY DIAGNOSTICS...";
+
+
+        securityRoundTrip.textContent =
+            "TESTING...";
+
+
+        securityPassword.textContent =
+            "TESTING...";
+
+
+        securityTamper.textContent =
+            "TESTING...";
+
+
+        securityRandom.textContent =
+            "TESTING...";
+
+
+        try {
+
+            const results =
+                await HyperSecurity.runAll();
+
+
+            securityRoundTrip.textContent =
+                results.roundTrip
+                    ? "✓ PASS"
+                    : "✗ FAIL";
+
+
+            securityPassword.textContent =
+                results.wrongPassword
+                    ? "✓ PASS"
+                    : "✗ FAIL";
+
+
+            securityTamper.textContent =
+                results.tamperDetection
+                    ? "✓ PASS"
+                    : "✗ FAIL";
+
+
+            securityRandom.textContent =
+                results.randomization
+                    ? "✓ PASS"
+                    : "✗ FAIL";
+
+
+            const allPassed =
+                results.roundTrip &&
+                results.wrongPassword &&
+                results.tamperDetection &&
+                results.randomization;
+
+
+            status.textContent =
+                allPassed
+                    ? "✓ ALL SECURITY DIAGNOSTICS PASSED."
+                    : "⚠ ONE OR MORE DIAGNOSTICS FAILED.";
+
+
+        } catch (error) {
+
+            console.error(error);
+
+
+            status.textContent =
+                "SECURITY DIAGNOSTICS ERROR: " +
+                error.message;
+
+        } finally {
+
+            securityTestButton.disabled =
+                false;
+
+        }
+
+    }
+);
 
 // ==========================================================
 // DECODE
