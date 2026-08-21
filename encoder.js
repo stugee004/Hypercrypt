@@ -2,19 +2,10 @@
 "use strict";
 
 /*
- * ============================================================
  * HYPERCRYPT
  * encoder.js
  *
- * Combines:
- *
- *     crypt.js
- *        +
- *     hypermath.js
- *
- * into the first complete encoding pipeline.
- *
- * Pipeline:
+ * Complete encoding pipeline:
  *
  * Message
  *    ↓
@@ -24,46 +15,30 @@
  *    ↓
  * HyperMath
  *    ↓
- * Package
+ * Final package
  *    ↓
  * Base64
- * ============================================================
  */
 
 
 class HyperEncoder {
 
-
-    // ========================================================
-    // ENCODE
-    // ========================================================
-
     static async encode(message, password) {
 
         if (typeof message !== "string") {
-
-            throw new Error(
-                "Message must be a string."
-            );
+            throw new Error("Message must be a string.");
         }
-
 
         if (
             typeof password !== "string" ||
             password.length === 0
         ) {
-
-            throw new Error(
-                "A password is required."
-            );
+            throw new Error("A password is required.");
         }
 
 
         // ----------------------------------------------------
-        // STEP 1
-        // Encrypt the message using AES-256-GCM.
-        //
-        // crypt.js generates the timestamp internally.
+        // 1. Encrypt the message with AES-256-GCM
         // ----------------------------------------------------
 
         const encrypted =
@@ -74,22 +49,28 @@ class HyperEncoder {
 
 
         // ----------------------------------------------------
-        // STEP 2
-        // Decode the crypt.js package.
-        //
-        // We need access to the timestamp and encrypted
-        // ciphertext so HyperMath can process it.
+        // 2. Read the cryptographic package
         // ----------------------------------------------------
 
         let cryptPackage;
 
         try {
 
+            const binary =
+                atob(encrypted);
+
             const json =
                 decodeURIComponent(
-                    escape(
-                        atob(encrypted)
-                    )
+                    Array.from(binary)
+                        .map(
+                            character =>
+                                "%" +
+                                character
+                                    .charCodeAt(0)
+                                    .toString(16)
+                                    .padStart(2, "0")
+                        )
+                        .join("")
                 );
 
             cryptPackage =
@@ -104,8 +85,7 @@ class HyperEncoder {
 
 
         // ----------------------------------------------------
-        // STEP 3
-        // Extract ciphertext.
+        // 3. Extract ciphertext
         // ----------------------------------------------------
 
         const ciphertext =
@@ -115,8 +95,7 @@ class HyperEncoder {
 
 
         // ----------------------------------------------------
-        // STEP 4
-        // Apply HyperMath.
+        // 4. Apply HyperMath
         // ----------------------------------------------------
 
         const mathResult =
@@ -127,9 +106,7 @@ class HyperEncoder {
 
 
         // ----------------------------------------------------
-        // STEP 5
-        // Replace the original ciphertext with the
-        // mathematically transformed ciphertext.
+        // 5. Replace ciphertext with HyperMath output
         // ----------------------------------------------------
 
         cryptPackage.ciphertext =
@@ -138,14 +115,13 @@ class HyperEncoder {
             );
 
 
-        // Store the original ciphertext length because
-        // HyperMath pads data to multiples of four bytes.
-
         cryptPackage.originalCiphertextLength =
             mathResult.originalLength;
 
 
-        // Record that HyperMath was applied.
+        // ----------------------------------------------------
+        // 6. Record HyperMath information
+        // ----------------------------------------------------
 
         cryptPackage.hyperMath = {
 
@@ -159,8 +135,7 @@ class HyperEncoder {
 
 
         // ----------------------------------------------------
-        // STEP 6
-        // Convert final package to JSON.
+        // 7. Convert final package to JSON
         // ----------------------------------------------------
 
         const finalJSON =
@@ -170,8 +145,7 @@ class HyperEncoder {
 
 
         // ----------------------------------------------------
-        // STEP 7
-        // Encode package as Base64.
+        // 8. Convert final package to Base64
         // ----------------------------------------------------
 
         const finalEncoded =
@@ -189,7 +163,7 @@ class HyperEncoder {
 
 
     // ========================================================
-    // SIMPLE TEST
+    // SELF TEST
     // ========================================================
 
     static async selfTest() {
