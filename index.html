@@ -1,0 +1,123 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>HyperCrypt</title>
+
+</head>
+
+
+<body>
+
+    <h1>HyperCrypt</h1>
+
+    <p>
+        Cryptographic encoder/decoder development version
+    </p>
+
+
+    <hr>
+
+
+    <h2>System Test</h2>
+
+    <p>
+        Open your browser's developer console and run:
+    </p>
+
+    <pre>HyperCrypt.selfTest()</pre>
+
+    <p>
+        Then run:
+    </p>
+
+    <pre>HyperMath.selfTest()</pre>
+
+
+    <hr>
+
+
+    <h2>Loaded Components</h2>
+
+    <p id="cryptStatus">
+        Checking crypt.js...
+    </p>
+
+    <p id="mathStatus">
+        Checking hypermath.js...
+    </p>
+
+
+    <!-- =====================================================
+         HYPERCRYPT JAVASCRIPT FILES
+         =====================================================
+
+         IMPORTANT:
+         crypt.js MUST load before hypermath.js.
+
+         We will add encoder.js and decoder.js later.
+         ===================================================== -->
+
+
+    <script src="crypt.js"></script>
+
+    <script src="hypermath.js"></script>
+
+
+    <!-- =====================================================
+         COMPONENT CHECK
+         ===================================================== -->
+
+    <script>
+
+        // Check crypt.js
+
+        if (typeof HyperCrypt !== "undefined") {
+
+            document.getElementById(
+                "cryptStatus"
+            ).textContent =
+                "✓ crypt.js loaded successfully.";
+
+        } else {
+
+            document.getElementById(
+                "cryptStatus"
+            ).textContent =
+                "✗ crypt.js could not be loaded.";
+        }
+
+
+        // Check hypermath.js
+
+        if (typeof HyperMath !== "undefined") {
+
+            document.getElementById(
+                "mathStatus"
+            ).textContent =
+                "✓ hypermath.js loaded successfully.";
+
+        } else {
+
+            document.getElementById(
+                "mathStatus"
+            ).textContent =
+                "✗ hypermath.js could not be loaded.";
+        }
+
+    </script>
+
+
+</body>
+
+</html>
+```
