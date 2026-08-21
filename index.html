@@ -1768,131 +1768,6 @@ encodeButton.addEventListener(
 );
 
 // ==========================================================
-// SECURITY DIAGNOSTICS
-// ==========================================================
-
-
-const securityTestButton =
-    document.getElementById(
-        "securityTestButton"
-    );
-
-
-const securityRoundTrip =
-    document.getElementById(
-        "securityRoundTrip"
-    );
-
-
-const securityPassword =
-    document.getElementById(
-        "securityPassword"
-    );
-
-
-const securityTamper =
-    document.getElementById(
-        "securityTamper"
-    );
-
-
-const securityRandom =
-    document.getElementById(
-        "securityRandom"
-    );
-
-
-securityTestButton.addEventListener(
-    "click",
-    async function () {
-
-        securityTestButton.disabled =
-            true;
-
-
-        status.textContent =
-            "RUNNING SECURITY DIAGNOSTICS...";
-
-
-        securityRoundTrip.textContent =
-            "TESTING...";
-
-
-        securityPassword.textContent =
-            "TESTING...";
-
-
-        securityTamper.textContent =
-            "TESTING...";
-
-
-        securityRandom.textContent =
-            "TESTING...";
-
-
-        try {
-
-            const results =
-                await HyperSecurity.runAll();
-
-
-            securityRoundTrip.textContent =
-                results.roundTrip
-                    ? "✓ PASS"
-                    : "✗ FAIL";
-
-
-            securityPassword.textContent =
-                results.wrongPassword
-                    ? "✓ PASS"
-                    : "✗ FAIL";
-
-
-            securityTamper.textContent =
-                results.tamperDetection
-                    ? "✓ PASS"
-                    : "✗ FAIL";
-
-
-            securityRandom.textContent =
-                results.randomization
-                    ? "✓ PASS"
-                    : "✗ FAIL";
-
-
-            const allPassed =
-                results.roundTrip &&
-                results.wrongPassword &&
-                results.tamperDetection &&
-                results.randomization;
-
-
-            status.textContent =
-                allPassed
-                    ? "✓ ALL SECURITY DIAGNOSTICS PASSED."
-                    : "⚠ ONE OR MORE DIAGNOSTICS FAILED.";
-
-
-        } catch (error) {
-
-            console.error(error);
-
-
-            status.textContent =
-                "SECURITY DIAGNOSTICS ERROR: " +
-                error.message;
-
-        } finally {
-
-            securityTestButton.disabled =
-                false;
-
-        }
-
-    }
-);
-
-// ==========================================================
 // DECODE
 // ==========================================================
 
@@ -2118,6 +1993,132 @@ clearEncodedButton.addEventListener(
     }
 );
 
+// ==========================================================
+// SECURITY DIAGNOSTICS
+// ==========================================================
+
+
+const securityTestButton =
+    document.getElementById(
+        "securityTestButton"
+    );
+
+
+const securityRoundTrip =
+    document.getElementById(
+        "securityRoundTrip"
+    );
+
+
+const securityPassword =
+    document.getElementById(
+        "securityPassword"
+    );
+
+
+const securityTamper =
+    document.getElementById(
+        "securityTamper"
+    );
+
+
+const securityRandom =
+    document.getElementById(
+        "securityRandom"
+    );
+
+
+securityTestButton.addEventListener(
+    "click",
+    async function () {
+
+        securityTestButton.disabled =
+            true;
+
+
+        status.textContent =
+            "RUNNING SECURITY DIAGNOSTICS...";
+
+
+        securityRoundTrip.textContent =
+            "TESTING...";
+
+
+        securityPassword.textContent =
+            "TESTING...";
+
+
+        securityTamper.textContent =
+            "TESTING...";
+
+
+        securityRandom.textContent =
+            "TESTING...";
+
+
+        try {
+
+            const results =
+                await HyperSecurity.runAll();
+
+
+            securityRoundTrip.textContent =
+                results.roundTrip
+                    ? "✓ PASS"
+                    : "✗ FAIL";
+
+
+            securityPassword.textContent =
+                results.wrongPassword
+                    ? "✓ PASS"
+                    : "✗ FAIL";
+
+
+            securityTamper.textContent =
+                results.tamperDetection
+                    ? "✓ PASS"
+                    : "✗ FAIL";
+
+
+            securityRandom.textContent =
+                results.randomization
+                    ? "✓ PASS"
+                    : "✗ FAIL";
+
+
+            const allPassed =
+                results.roundTrip &&
+                results.wrongPassword &&
+                results.tamperDetection &&
+                results.randomization;
+
+
+            status.textContent =
+                allPassed
+                    ? "✓ ALL SECURITY DIAGNOSTICS PASSED."
+                    : "⚠ ONE OR MORE DIAGNOSTICS FAILED.";
+
+
+        } catch (error) {
+
+            console.error(error);
+
+
+            status.textContent =
+                "SECURITY DIAGNOSTICS ERROR: " +
+                error.message;
+
+        } finally {
+
+            securityTestButton.disabled =
+                false;
+
+        }
+
+    }
+);
+
+    
 </script>
 
 
