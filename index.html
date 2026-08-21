@@ -16,6 +16,10 @@
 
 <style>
 
+/* =========================================================
+   GENERAL
+   ========================================================= */
+
 * {
     box-sizing: border-box;
 }
@@ -33,19 +37,65 @@ body {
         "Segoe UI",
         sans-serif;
 
-    background: #0b0f14;
+    background: #080b10;
 
     color: #e8eef5;
+
+    overflow-x: hidden;
 }
 
 
 .container {
 
-    max-width: 1000px;
+    max-width: 1100px;
 
     margin: 0 auto;
+
+    position: relative;
+
+    z-index: 2;
 }
 
+
+/* =========================================================
+   BACKGROUND
+   ========================================================= */
+
+.background-grid {
+
+    position: fixed;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    opacity: 0.08;
+
+    background-image:
+        linear-gradient(
+            #ffffff 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            #ffffff 1px,
+            transparent 1px
+        );
+
+    background-size: 40px 40px;
+
+    transform:
+        perspective(500px)
+        rotateX(55deg)
+        scale(2);
+
+    transform-origin: center top;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
 
 header {
 
@@ -59,25 +109,63 @@ h1 {
 
     margin: 0;
 
-    font-size: 48px;
+    font-size: 52px;
 
-    letter-spacing: 5px;
+    letter-spacing: 7px;
+
+    font-weight: 800;
 }
 
 
 .subtitle {
 
-    margin-top: 8px;
+    margin-top: 10px;
 
-    color: #8d9aaa;
+    color: #8290a0;
 
-    font-size: 16px;
+    font-size: 15px;
+
+    letter-spacing: 2px;
 }
 
 
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+#status {
+
+    padding: 14px;
+
+    border-radius: 8px;
+
+    background: #0e141c;
+
+    border: 1px solid #26313d;
+
+    margin-bottom: 20px;
+
+    font-family:
+        "SFMono-Regular",
+        Consolas,
+        monospace;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   PANELS
+   ========================================================= */
+
 .panel {
 
-    background: #121821;
+    background: rgba(
+        15,
+        21,
+        29,
+        0.94
+    );
 
     border: 1px solid #26313d;
 
@@ -86,6 +174,8 @@ h1 {
     padding: 25px;
 
     margin-bottom: 20px;
+
+    backdrop-filter: blur(8px);
 }
 
 
@@ -93,9 +183,15 @@ h1 {
 
     margin-top: 0;
 
-    font-size: 20px;
+    font-size: 19px;
+
+    letter-spacing: 1px;
 }
 
+
+/* =========================================================
+   INPUTS
+   ========================================================= */
 
 .field {
 
@@ -118,7 +214,7 @@ input {
 
     width: 100%;
 
-    background: #080c11;
+    background: #070a0e;
 
     color: #e8eef5;
 
@@ -150,9 +246,41 @@ textarea {
 textarea:focus,
 input:focus {
 
-    border-color: #6b7f95;
+    border-color: #70869d;
+
+    box-shadow:
+        0 0 0 2px
+        rgba(
+            112,
+            134,
+            157,
+            0.12
+        );
 }
 
+
+.info {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-top: 8px;
+
+    color: #687687;
+
+    font-family:
+        "SFMono-Regular",
+        Consolas,
+        monospace;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
 
 .button-row {
 
@@ -181,12 +309,26 @@ button {
     background: #e8eef5;
 
     color: #0b0f14;
+
+    transition:
+        transform 0.15s,
+        opacity 0.15s;
 }
 
 
 button:hover {
 
     opacity: 0.85;
+
+    transform:
+        translateY(-1px);
+}
+
+
+button:active {
+
+    transform:
+        translateY(1px);
 }
 
 
@@ -195,6 +337,8 @@ button:disabled {
     opacity: 0.45;
 
     cursor: not-allowed;
+
+    transform: none;
 }
 
 
@@ -214,6 +358,10 @@ button:disabled {
 }
 
 
+/* =========================================================
+   OUTPUT
+   ========================================================= */
+
 .output {
 
     min-height: 150px;
@@ -222,7 +370,7 @@ button:disabled {
 
     word-break: break-all;
 
-    background: #080c11;
+    background: #070a0e;
 
     border: 1px solid #2c3947;
 
@@ -241,36 +389,151 @@ button:disabled {
 }
 
 
-.info {
+/* =========================================================
+   PIPELINE
+   ========================================================= */
+
+.pipeline {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            6,
+            1fr
+        );
+
+    gap: 8px;
+
+    margin-top: 15px;
+}
+
+
+.pipeline-step {
+
+    min-height: 95px;
 
     display: flex;
 
-    justify-content: space-between;
+    flex-direction: column;
 
-    margin-top: 8px;
+    justify-content: center;
 
-    color: #687687;
+    align-items: center;
+
+    text-align: center;
+
+    padding: 10px;
+
+    border-radius: 9px;
+
+    border: 1px solid #26313d;
+
+    background: #080c11;
 
     font-family:
         "SFMono-Regular",
         Consolas,
         monospace;
 
-    font-size: 12px;
+    font-size: 11px;
+
+    transition:
+        border-color 0.25s,
+        background 0.25s,
+        transform 0.25s;
 }
 
 
-#status {
+.pipeline-step .number {
 
-    padding: 12px;
+    font-size: 10px;
+
+    color: #657486;
+
+    margin-bottom: 6px;
+}
+
+
+.pipeline-step.active {
+
+    border-color: #dce5ee;
+
+    background: #17202a;
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 0 20px
+        rgba(
+            220,
+            229,
+            238,
+            0.08
+        );
+}
+
+
+.pipeline-step.complete {
+
+    border-color: #687b8e;
+
+    background: #111922;
+}
+
+
+.pipeline-arrow {
+
+    display: none;
+}
+
+
+/* =========================================================
+   TECHNICAL INFORMATION
+   ========================================================= */
+
+.tech-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(190px, 1fr)
+        );
+
+    gap: 10px;
+}
+
+
+.tech-item {
+
+    padding: 14px;
 
     border-radius: 8px;
 
     background: #080c11;
 
     border: 1px solid #26313d;
+}
 
-    margin-bottom: 20px;
+
+.tech-label {
+
+    color: #687687;
+
+    font-size: 11px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 5px;
+}
+
+
+.tech-value {
 
     font-family:
         "SFMono-Regular",
@@ -278,8 +541,14 @@ button:disabled {
         monospace;
 
     font-size: 13px;
+
+    word-break: break-word;
 }
 
+
+/* =========================================================
+   SYSTEM
+   ========================================================= */
 
 .system-status {
 
@@ -314,15 +583,44 @@ button:disabled {
 }
 
 
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
 footer {
 
     text-align: center;
 
-    color: #687687;
+    color: #586676;
 
     font-size: 12px;
 
     margin-top: 30px;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+    .pipeline {
+
+        grid-template-columns:
+            repeat(
+                2,
+                1fr
+            );
+    }
+
+
+    h1 {
+
+        font-size: 38px;
+
+        letter-spacing: 4px;
+    }
 }
 
 </style>
@@ -333,28 +631,138 @@ footer {
 <body>
 
 
+<div class="background-grid"></div>
+
+
 <div class="container">
 
+
+<!-- =====================================================
+     HEADER
+     ===================================================== -->
 
 <header>
 
 <h1>HYPERCRYPT</h1>
 
 <div class="subtitle">
-AES-256-GCM + HyperMath
+CRYPTOGRAPHIC MESSAGE SYSTEM
 </div>
 
 </header>
 
 
+<!-- =====================================================
+     STATUS
+     ===================================================== -->
+
 <div id="status">
-Ready.
+READY.
 </div>
 
 
-<!-- ======================================================
+<!-- =====================================================
+     PIPELINE
+     ===================================================== -->
+
+<section class="panel">
+
+<h2>Encryption Pipeline</h2>
+
+
+<div class="pipeline">
+
+<div
+    class="pipeline-step"
+    id="step1"
+>
+
+<div class="number">
+01
+</div>
+
+MESSAGE
+
+</div>
+
+
+<div
+    class="pipeline-step"
+    id="step2"
+>
+
+<div class="number">
+02
+</div>
+
+KEY DERIVATION
+
+</div>
+
+
+<div
+    class="pipeline-step"
+    id="step3"
+>
+
+<div class="number">
+03
+</div>
+
+AES-256-GCM
+
+</div>
+
+
+<div
+    class="pipeline-step"
+    id="step4"
+>
+
+<div class="number">
+04
+</div>
+
+HYPERMATH
+
+</div>
+
+
+<div
+    class="pipeline-step"
+    id="step5"
+>
+
+<div class="number">
+05
+</div>
+
+TIMESTAMP
+
+</div>
+
+
+<div
+    class="pipeline-step"
+    id="step6"
+>
+
+<div class="number">
+06
+</div>
+
+FINAL PACKAGE
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
      MESSAGE
-     ====================================================== -->
+     ===================================================== -->
 
 <section class="panel">
 
@@ -367,14 +775,18 @@ Ready.
 Message
 </label>
 
+
 <textarea
     id="message"
     placeholder="Enter a message..."
 ></textarea>
 
+
 <div class="info">
 
-<span>Plaintext</span>
+<span>
+PLAINTEXT
+</span>
 
 <span id="messageCount">
 0 characters
@@ -390,6 +802,7 @@ Message
 <label for="password">
 Password
 </label>
+
 
 <input
     id="password"
@@ -423,9 +836,9 @@ CLEAR MESSAGE
 </section>
 
 
-<!-- ======================================================
+<!-- =====================================================
      ENCODED DATA
-     ====================================================== -->
+     ===================================================== -->
 
 <section class="panel">
 
@@ -438,6 +851,7 @@ CLEAR MESSAGE
 Encrypted / Encoded Data
 </label>
 
+
 <textarea
     id="encodedInput"
     placeholder="Encoded HyperCrypt data will appear here. You can also paste encoded data here."
@@ -446,7 +860,9 @@ Encrypted / Encoded Data
 
 <div class="info">
 
-<span>Base64 package</span>
+<span>
+BASE64 PACKAGE
+</span>
 
 <span id="encodedCount">
 0 characters
@@ -489,9 +905,9 @@ CLEAR ENCODED
 </section>
 
 
-<!-- ======================================================
+<!-- =====================================================
      DECODED MESSAGE
-     ====================================================== -->
+     ===================================================== -->
 
 <section class="panel">
 
@@ -508,7 +924,9 @@ No decoded message yet.
 
 <div class="info">
 
-<span>Recovered plaintext</span>
+<span>
+RECOVERED PLAINTEXT
+</span>
 
 <span id="decodedCount">
 0 characters
@@ -519,9 +937,121 @@ No decoded message yet.
 </section>
 
 
-<!-- ======================================================
+<!-- =====================================================
+     TECHNICAL INFORMATION
+     ===================================================== -->
+
+<section class="panel">
+
+<h2>Cryptographic Information</h2>
+
+
+<div class="tech-grid">
+
+
+<div class="tech-item">
+
+<div class="tech-label">
+Encryption
+</div>
+
+<div
+    class="tech-value"
+    id="techEncryption"
+>
+AES-256-GCM
+</div>
+
+</div>
+
+
+<div class="tech-item">
+
+<div class="tech-label">
+Key Derivation
+</div>
+
+<div
+    class="tech-value"
+>
+PBKDF2-SHA256
+</div>
+
+</div>
+
+
+<div class="tech-item">
+
+<div class="tech-label">
+HyperMath Rounds
+</div>
+
+<div
+    class="tech-value"
+    id="techRounds"
+>
+--
+</div>
+
+</div>
+
+
+<div class="tech-item">
+
+<div class="tech-label">
+Timestamp
+</div>
+
+<div
+    class="tech-value"
+    id="techTimestamp"
+>
+--
+</div>
+
+</div>
+
+
+<div class="tech-item">
+
+<div class="tech-label">
+Ciphertext Size
+</div>
+
+<div
+    class="tech-value"
+    id="techCipherSize"
+>
+--
+</div>
+
+</div>
+
+
+<div class="tech-item">
+
+<div class="tech-label">
+Package Size
+</div>
+
+<div
+    class="tech-value"
+    id="techPackageSize"
+>
+--
+</div>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
      SYSTEM
-     ====================================================== -->
+     ===================================================== -->
 
 <section class="panel">
 
@@ -529,6 +1059,7 @@ No decoded message yet.
 
 
 <div class="system-status">
+
 
 <div
     class="status-item"
@@ -561,6 +1092,7 @@ Checking encoder.js...
 Checking decoder.js...
 </div>
 
+
 </div>
 
 </section>
@@ -576,9 +1108,9 @@ HyperCrypt development build
 </div>
 
 
-<!-- ======================================================
+<!-- =====================================================
      CORE JAVASCRIPT
-     ====================================================== -->
+     ===================================================== -->
 
 <script src="crypt.js"></script>
 
@@ -589,13 +1121,18 @@ HyperCrypt development build
 <script src="decoder.js"></script>
 
 
-<!-- ======================================================
+<!-- =====================================================
      INTERFACE JAVASCRIPT
-     ====================================================== -->
+     ===================================================== -->
 
 <script>
 
 "use strict";
+
+
+// ==========================================================
+// ELEMENTS
+// ==========================================================
 
 
 const messageInput =
@@ -677,6 +1214,57 @@ const clearEncodedButton =
 
 
 // ==========================================================
+// PIPELINE ELEMENTS
+// ==========================================================
+
+
+const pipelineSteps = [
+
+    document.getElementById("step1"),
+
+    document.getElementById("step2"),
+
+    document.getElementById("step3"),
+
+    document.getElementById("step4"),
+
+    document.getElementById("step5"),
+
+    document.getElementById("step6")
+
+];
+
+
+// ==========================================================
+// TECHNICAL INFORMATION
+// ==========================================================
+
+
+const techRounds =
+    document.getElementById(
+        "techRounds"
+    );
+
+
+const techTimestamp =
+    document.getElementById(
+        "techTimestamp"
+    );
+
+
+const techCipherSize =
+    document.getElementById(
+        "techCipherSize"
+    );
+
+
+const techPackageSize =
+    document.getElementById(
+        "techPackageSize"
+    );
+
+
+// ==========================================================
 // SYSTEM STATUS
 // ==========================================================
 
@@ -711,6 +1299,93 @@ document.getElementById(
     typeof HyperDecoder !== "undefined"
         ? "✓ decoder.js loaded"
         : "✗ decoder.js missing";
+
+
+// ==========================================================
+// PIPELINE ANIMATION
+// ==========================================================
+
+
+function resetPipeline() {
+
+    pipelineSteps.forEach(
+        step => {
+
+            step.classList.remove(
+                "active"
+            );
+
+            step.classList.remove(
+                "complete"
+            );
+
+        }
+    );
+}
+
+
+function activateStep(index) {
+
+    pipelineSteps.forEach(
+        (step, i) => {
+
+            if (i < index) {
+
+                step.classList.remove(
+                    "active"
+                );
+
+                step.classList.add(
+                    "complete"
+                );
+
+            }
+
+            else if (i === index) {
+
+                step.classList.add(
+                    "active"
+                );
+
+                step.classList.remove(
+                    "complete"
+                );
+
+            }
+
+            else {
+
+                step.classList.remove(
+                    "active"
+                );
+
+                step.classList.remove(
+                    "complete"
+                );
+
+            }
+
+        }
+    );
+}
+
+
+function completePipeline() {
+
+    pipelineSteps.forEach(
+        step => {
+
+            step.classList.remove(
+                "active"
+            );
+
+            step.classList.add(
+                "complete"
+            );
+
+        }
+    );
+}
 
 
 // ==========================================================
@@ -762,7 +1437,7 @@ encodeButton.addEventListener(
         if (message.length === 0) {
 
             status.textContent =
-                "Error: enter a message.";
+                "ERROR: ENTER A MESSAGE.";
 
             return;
         }
@@ -771,7 +1446,7 @@ encodeButton.addEventListener(
         if (password.length === 0) {
 
             status.textContent =
-                "Error: enter a password.";
+                "ERROR: ENTER A PASSWORD.";
 
             return;
         }
@@ -779,18 +1454,119 @@ encodeButton.addEventListener(
 
         try {
 
-            status.textContent =
-                "Encoding message...";
-
-
             encodeButton.disabled = true;
 
+
+            resetPipeline();
+
+
+            // ------------------------------------------------
+            // MESSAGE
+            // ------------------------------------------------
+
+            status.textContent =
+                "PROCESSING MESSAGE...";
+
+            activateStep(0);
+
+            await new Promise(
+                resolve =>
+                    setTimeout(
+                        resolve,
+                        150
+                    )
+            );
+
+
+            // ------------------------------------------------
+            // KEY DERIVATION
+            // ------------------------------------------------
+
+            status.textContent =
+                "DERIVING CRYPTOGRAPHIC KEY...";
+
+            activateStep(1);
+
+            await new Promise(
+                resolve =>
+                    setTimeout(
+                        resolve,
+                        150
+                    )
+            );
+
+
+            // ------------------------------------------------
+            // AES
+            // ------------------------------------------------
+
+            status.textContent =
+                "RUNNING AES-256-GCM...";
+
+            activateStep(2);
+
+
+            // The actual encoder does all cryptographic work.
 
             const encoded =
                 await HyperEncoder.encode(
                     message,
                     password
                 );
+
+
+            // ------------------------------------------------
+            // HYPERMATH
+            // ------------------------------------------------
+
+            status.textContent =
+                "RUNNING HYPERMATH...";
+
+            activateStep(3);
+
+            await new Promise(
+                resolve =>
+                    setTimeout(
+                        resolve,
+                        150
+                    )
+            );
+
+
+            // ------------------------------------------------
+            // TIMESTAMP
+            // ------------------------------------------------
+
+            status.textContent =
+                "RECORDING TIMESTAMP...";
+
+            activateStep(4);
+
+            await new Promise(
+                resolve =>
+                    setTimeout(
+                        resolve,
+                        150
+                    )
+            );
+
+
+            // ------------------------------------------------
+            // FINAL PACKAGE
+            // ------------------------------------------------
+
+            status.textContent =
+                "BUILDING FINAL PACKAGE...";
+
+            activateStep(5);
+
+            await new Promise(
+                resolve =>
+                    setTimeout(
+                        resolve,
+                        150
+                    )
+            );
 
 
             encodedInput.value =
@@ -802,8 +1578,83 @@ encodeButton.addEventListener(
                 " characters";
 
 
+            // ------------------------------------------------
+            // Extract technical information
+            // ------------------------------------------------
+
+            try {
+
+                const binary =
+                    atob(encoded);
+
+
+                const json =
+                    decodeURIComponent(
+                        Array.from(binary)
+                            .map(
+                                character =>
+                                    "%" +
+                                    character
+                                        .charCodeAt(0)
+                                        .toString(16)
+                                        .padStart(2, "0")
+                            )
+                            .join("")
+                    );
+
+
+                const packageData =
+                    JSON.parse(json);
+
+
+                techRounds.textContent =
+                    packageData.hyperMath
+                        ? packageData.hyperMath.rounds
+                        : "--";
+
+
+                techTimestamp.textContent =
+                    packageData.timestamp ||
+                    "--";
+
+
+                if (
+                    packageData.ciphertext
+                ) {
+
+                    const cipherBytes =
+                        HyperCrypt.base64ToBytes(
+                            packageData.ciphertext
+                        );
+
+
+                    techCipherSize.textContent =
+                        cipherBytes.length +
+                        " bytes";
+
+                }
+
+
+                techPackageSize.textContent =
+                    encoded.length +
+                    " characters";
+
+
+            } catch (error) {
+
+                console.warn(
+                    "Could not read technical metadata.",
+                    error
+                );
+
+            }
+
+
+            completePipeline();
+
+
             status.textContent =
-                "Encoding complete.";
+                "✓ ENCODING COMPLETE.";
 
 
         } catch (error) {
@@ -811,8 +1662,11 @@ encodeButton.addEventListener(
             console.error(error);
 
 
+            resetPipeline();
+
+
             status.textContent =
-                "Encoding error: " +
+                "ENCODING ERROR: " +
                 error.message;
 
 
@@ -846,7 +1700,7 @@ decodeButton.addEventListener(
         if (encoded.length === 0) {
 
             status.textContent =
-                "Error: enter or paste encoded data.";
+                "ERROR: ENTER OR PASTE ENCODED DATA.";
 
             return;
         }
@@ -855,7 +1709,7 @@ decodeButton.addEventListener(
         if (password.length === 0) {
 
             status.textContent =
-                "Error: enter the password.";
+                "ERROR: ENTER THE PASSWORD.";
 
             return;
         }
@@ -863,11 +1717,46 @@ decodeButton.addEventListener(
 
         try {
 
-            status.textContent =
-                "Decoding data...";
-
-
             decodeButton.disabled = true;
+
+
+            resetPipeline();
+
+
+            status.textContent =
+                "READING ENCODED PACKAGE...";
+
+            activateStep(5);
+
+
+            await new Promise(
+                resolve =>
+                    setTimeout(
+                        resolve,
+                        150
+                    )
+            );
+
+
+            status.textContent =
+                "REVERSING HYPERMATH...";
+
+            activateStep(3);
+
+
+            await new Promise(
+                resolve =>
+                    setTimeout(
+                        resolve,
+                        150
+                    )
+            );
+
+
+            status.textContent =
+                "VERIFYING AES-256-GCM...";
+
+            activateStep(2);
 
 
             const decoded =
@@ -886,8 +1775,11 @@ decodeButton.addEventListener(
                 " characters";
 
 
+            completePipeline();
+
+
             status.textContent =
-                "Decoding complete.";
+                "✓ DECRYPTION VERIFIED.";
 
 
         } catch (error) {
@@ -895,15 +1787,19 @@ decodeButton.addEventListener(
             console.error(error);
 
 
+            resetPipeline();
+
+
             decodedOutput.textContent =
                 "Unable to decode.";
+
 
             decodedCount.textContent =
                 "0 characters";
 
 
             status.textContent =
-                "Decoding failed: " +
+                "DECRYPTION FAILED: " +
                 error.message;
 
 
@@ -918,7 +1814,7 @@ decodeButton.addEventListener(
 
 
 // ==========================================================
-// COPY ENCODED DATA
+// COPY
 // ==========================================================
 
 
@@ -933,7 +1829,7 @@ copyButton.addEventListener(
         if (encoded.length === 0) {
 
             status.textContent =
-                "Nothing to copy.";
+                "NOTHING TO COPY.";
 
             return;
         }
@@ -947,13 +1843,12 @@ copyButton.addEventListener(
 
 
             status.textContent =
-                "Encoded data copied to clipboard.";
-
+                "ENCODED DATA COPIED.";
 
         } catch (error) {
 
             status.textContent =
-                "Could not access clipboard.";
+                "COULD NOT ACCESS CLIPBOARD.";
 
         }
 
@@ -984,7 +1879,7 @@ clearMessageButton.addEventListener(
 
 
         status.textContent =
-            "Message cleared.";
+            "MESSAGE CLEARED.";
 
     }
 );
@@ -1006,11 +1901,10 @@ clearEncodedButton.addEventListener(
 
 
         status.textContent =
-            "Encoded data cleared.";
+            "ENCODED DATA CLEARED.";
 
     }
 );
-
 
 </script>
 
