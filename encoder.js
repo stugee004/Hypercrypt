@@ -1,4 +1,3 @@
-```javascript
 "use strict";
 
 /*
@@ -222,4 +221,3 @@ class HyperEncoder {
 // ============================================================
 
 window.HyperEncoder = HyperEncoder;
-```
