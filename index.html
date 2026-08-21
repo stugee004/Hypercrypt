@@ -1,341 +1,331 @@
-```html id="p6qz0w"
+```html
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
-    <title>HyperCrypt</title>
+<title>HyperCrypt</title>
 
 
-    <style>
+<style>
 
-        /* =====================================================
-           GENERAL
-           ===================================================== */
+* {
+    box-sizing: border-box;
+}
 
-        * {
-            box-sizing: border-box;
-        }
 
+body {
 
-        body {
+    margin: 0;
 
-            margin: 0;
+    padding: 40px 20px;
 
-            padding: 40px 20px;
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
 
-            font-family:
-                -apple-system,
-                BlinkMacSystemFont,
-                "Segoe UI",
-                sans-serif;
+    background: #0b0f14;
 
-            background: #0b0f14;
+    color: #e8eef5;
+}
 
-            color: #e8eef5;
-        }
 
+.container {
 
-        .container {
+    max-width: 1000px;
 
-            max-width: 1000px;
+    margin: 0 auto;
+}
 
-            margin: 0 auto;
-        }
 
+header {
 
-        /* =====================================================
-           HEADER
-           ===================================================== */
+    text-align: center;
 
-        header {
+    margin-bottom: 35px;
+}
 
-            text-align: center;
 
-            margin-bottom: 35px;
-        }
+h1 {
 
+    margin: 0;
 
-        h1 {
+    font-size: 48px;
 
-            margin: 0;
+    letter-spacing: 5px;
+}
 
-            font-size: 48px;
 
-            letter-spacing: 5px;
-        }
+.subtitle {
 
+    margin-top: 8px;
 
-        .subtitle {
+    color: #8d9aaa;
 
-            margin-top: 8px;
+    font-size: 16px;
+}
 
-            color: #8d9aaa;
 
-            font-size: 16px;
-        }
+.panel {
 
+    background: #121821;
 
-        /* =====================================================
-           PANELS
-           ===================================================== */
+    border: 1px solid #26313d;
 
-        .panel {
+    border-radius: 12px;
 
-            background: #121821;
+    padding: 25px;
 
-            border: 1px solid #26313d;
+    margin-bottom: 20px;
+}
 
-            border-radius: 12px;
 
-            padding: 25px;
+.panel h2 {
 
-            margin-bottom: 20px;
-        }
+    margin-top: 0;
 
+    font-size: 20px;
+}
 
-        .panel h2 {
 
-            margin-top: 0;
+.field {
 
-            font-size: 20px;
-        }
+    margin-bottom: 20px;
+}
 
 
-        /* =====================================================
-           INPUTS
-           ===================================================== */
+label {
 
-        label {
+    display: block;
 
-            display: block;
+    margin-bottom: 8px;
 
-            margin-bottom: 8px;
+    font-weight: 600;
+}
 
-            font-weight: 600;
-        }
 
+textarea,
+input {
 
-        textarea,
-        input {
+    width: 100%;
 
-            width: 100%;
+    background: #080c11;
 
-            background: #080c11;
+    color: #e8eef5;
 
-            color: #e8eef5;
+    border: 1px solid #2c3947;
 
-            border: 1px solid #2c3947;
+    border-radius: 8px;
 
-            border-radius: 8px;
+    padding: 13px;
 
-            padding: 13px;
+    font-family:
+        "SFMono-Regular",
+        Consolas,
+        monospace;
 
-            font-family:
-                "SFMono-Regular",
-                Consolas,
-                monospace;
+    font-size: 14px;
 
-            font-size: 14px;
+    outline: none;
+}
 
-            outline: none;
-        }
 
+textarea {
 
-        textarea {
+    min-height: 150px;
 
-            min-height: 150px;
+    resize: vertical;
+}
 
-            resize: vertical;
-        }
 
+textarea:focus,
+input:focus {
 
-        textarea:focus,
-        input:focus {
+    border-color: #6b7f95;
+}
 
-            border-color: #6b7f95;
-        }
 
+.button-row {
 
-        .field {
+    display: flex;
 
-            margin-bottom: 20px;
-        }
+    gap: 12px;
 
+    flex-wrap: wrap;
+}
 
-        /* =====================================================
-           BUTTONS
-           ===================================================== */
 
-        .button-row {
+button {
 
-            display: flex;
+    border: none;
 
-            gap: 12px;
+    border-radius: 8px;
 
-            flex-wrap: wrap;
-        }
+    padding: 12px 22px;
 
+    font-size: 14px;
 
-        button {
+    font-weight: 700;
 
-            border: none;
+    cursor: pointer;
 
-            border-radius: 8px;
+    background: #e8eef5;
 
-            padding: 12px 22px;
+    color: #0b0f14;
+}
 
-            font-size: 14px;
 
-            font-weight: 700;
+button:hover {
 
-            cursor: pointer;
+    opacity: 0.85;
+}
 
-            background: #e8eef5;
 
-            color: #0b0f14;
-        }
+button:disabled {
 
+    opacity: 0.45;
 
-        button:hover {
+    cursor: not-allowed;
+}
 
-            opacity: 0.85;
-        }
 
+.secondary {
 
-        button:disabled {
+    background: #26313d;
 
-            opacity: 0.45;
+    color: #e8eef5;
+}
 
-            cursor: not-allowed;
-        }
 
+.danger {
 
-        .secondary {
+    background: #3a2525;
 
-            background: #26313d;
+    color: #f0caca;
+}
 
-            color: #e8eef5;
-        }
 
+.output {
 
-        /* =====================================================
-           OUTPUT
-           ===================================================== */
+    min-height: 150px;
 
-        .output {
+    white-space: pre-wrap;
 
-            min-height: 150px;
+    word-break: break-all;
 
-            white-space: pre-wrap;
+    background: #080c11;
 
-            word-break: break-all;
+    border: 1px solid #2c3947;
 
-            background: #080c11;
+    border-radius: 8px;
 
-            border: 1px solid #2c3947;
+    padding: 15px;
 
-            border-radius: 8px;
+    font-family:
+        "SFMono-Regular",
+        Consolas,
+        monospace;
 
-            padding: 15px;
+    font-size: 13px;
 
-            font-family:
-                "SFMono-Regular",
-                Consolas,
-                monospace;
+    color: #b9c7d6;
+}
 
-            font-size: 13px;
 
-            color: #b9c7d6;
-        }
+.info {
 
+    display: flex;
 
-        /* =====================================================
-           STATUS
-           ===================================================== */
+    justify-content: space-between;
 
-        #status {
+    margin-top: 8px;
 
-            padding: 12px;
+    color: #687687;
 
-            border-radius: 8px;
+    font-family:
+        "SFMono-Regular",
+        Consolas,
+        monospace;
 
-            background: #080c11;
+    font-size: 12px;
+}
 
-            border: 1px solid #26313d;
 
-            margin-bottom: 20px;
+#status {
 
-            font-family:
-                "SFMono-Regular",
-                Consolas,
-                monospace;
+    padding: 12px;
 
-            font-size: 13px;
-        }
+    border-radius: 8px;
 
+    background: #080c11;
 
-        /* =====================================================
-           SYSTEM STATUS
-           ===================================================== */
+    border: 1px solid #26313d;
 
-        .system-status {
+    margin-bottom: 20px;
 
-            display: grid;
+    font-family:
+        "SFMono-Regular",
+        Consolas,
+        monospace;
 
-            grid-template-columns:
-                repeat(
-                    auto-fit,
-                    minmax(180px, 1fr)
-                );
+    font-size: 13px;
+}
 
-            gap: 10px;
-        }
 
+.system-status {
 
-        .status-item {
+    display: grid;
 
-            background: #080c11;
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(180px, 1fr)
+        );
 
-            border: 1px solid #26313d;
+    gap: 10px;
+}
 
-            border-radius: 8px;
 
-            padding: 12px;
+.status-item {
 
-            font-family:
-                "SFMono-Regular",
-                Consolas,
-                monospace;
+    background: #080c11;
 
-            font-size: 13px;
-        }
+    border: 1px solid #26313d;
 
+    border-radius: 8px;
 
-        /* =====================================================
-           FOOTER
-           ===================================================== */
+    padding: 12px;
 
-        footer {
+    font-family:
+        "SFMono-Regular",
+        Consolas,
+        monospace;
 
-            text-align: center;
+    font-size: 13px;
+}
 
-            color: #687687;
 
-            font-size: 12px;
+footer {
 
-            margin-top: 30px;
-        }
+    text-align: center;
 
+    color: #687687;
 
-    </style>
+    font-size: 12px;
+
+    margin-top: 30px;
+}
+
+</style>
 
 </head>
 
@@ -346,201 +336,249 @@
 <div class="container">
 
 
-    <!-- =====================================================
-         HEADER
-         ===================================================== -->
+<header>
 
-    <header>
+<h1>HYPERCRYPT</h1>
 
-        <h1>HYPERCRYPT</h1>
+<div class="subtitle">
+AES-256-GCM + HyperMath
+</div>
 
-        <div class="subtitle">
-            AES-256-GCM + HyperMath
-        </div>
+</header>
 
-    </header>
 
+<div id="status">
+Ready.
+</div>
 
-    <!-- =====================================================
-         STATUS
-         ===================================================== -->
 
-    <div id="status">
-        Ready.
-    </div>
+<!-- ======================================================
+     MESSAGE
+     ====================================================== -->
 
+<section class="panel">
 
-    <!-- =====================================================
-         MESSAGE
-         ===================================================== -->
+<h2>Message</h2>
 
-    <section class="panel">
 
-        <h2>Message</h2>
+<div class="field">
 
+<label for="message">
+Message
+</label>
 
-        <div class="field">
+<textarea
+    id="message"
+    placeholder="Enter a message..."
+></textarea>
 
-            <label for="message">
-                Message
-            </label>
+<div class="info">
 
-            <textarea
-                id="message"
-                placeholder="Enter a message..."
-            ></textarea>
+<span>Plaintext</span>
 
-        </div>
+<span id="messageCount">
+0 characters
+</span>
 
+</div>
 
-        <div class="field">
+</div>
 
-            <label for="password">
-                Password
-            </label>
 
-            <input
-                id="password"
-                type="password"
-                placeholder="Enter encryption password..."
-            >
+<div class="field">
 
-        </div>
+<label for="password">
+Password
+</label>
 
+<input
+    id="password"
+    type="password"
+    placeholder="Enter encryption password..."
+>
 
-        <div class="button-row">
+</div>
 
-            <button
-                id="encodeButton"
-                type="button"
-            >
-                ENCODE
-            </button>
 
+<div class="button-row">
 
-            <button
-                id="decodeButton"
-                type="button"
-                class="secondary"
-            >
-                DECODE
-            </button>
+<button
+    id="encodeButton"
+    type="button"
+>
+ENCODE
+</button>
 
-        </div>
 
-    </section>
+<button
+    id="clearMessageButton"
+    type="button"
+    class="secondary"
+>
+CLEAR MESSAGE
+</button>
 
+</div>
 
-    <!-- =====================================================
-         ENCODED DATA
-         ===================================================== -->
+</section>
 
-    <section class="panel">
 
-        <h2>Encoded Data</h2>
+<!-- ======================================================
+     ENCODED DATA
+     ====================================================== -->
 
+<section class="panel">
 
-        <div
-            id="encodedOutput"
-            class="output"
-        >
-            No encoded data yet.
-        </div>
+<h2>Encoded Data</h2>
 
 
-        <br>
+<div class="field">
 
+<label for="encodedInput">
+Encrypted / Encoded Data
+</label>
 
-        <button
-            id="copyButton"
-            type="button"
-            class="secondary"
-        >
-            COPY ENCODED DATA
-        </button>
+<textarea
+    id="encodedInput"
+    placeholder="Encoded HyperCrypt data will appear here. You can also paste encoded data here."
+></textarea>
 
-    </section>
 
+<div class="info">
 
-    <!-- =====================================================
-         DECODED MESSAGE
-         ===================================================== -->
+<span>Base64 package</span>
 
-    <section class="panel">
+<span id="encodedCount">
+0 characters
+</span>
 
-        <h2>Decoded Message</h2>
+</div>
 
+</div>
 
-        <div
-            id="decodedOutput"
-            class="output"
-        >
-            No decoded message yet.
-        </div>
 
-    </section>
+<div class="button-row">
 
+<button
+    id="decodeButton"
+    type="button"
+>
+DECODE
+</button>
 
-    <!-- =====================================================
-         SYSTEM STATUS
-         ===================================================== -->
 
-    <section class="panel">
+<button
+    id="copyButton"
+    type="button"
+    class="secondary"
+>
+COPY
+</button>
 
-        <h2>System</h2>
 
+<button
+    id="clearEncodedButton"
+    type="button"
+    class="danger"
+>
+CLEAR ENCODED
+</button>
 
-        <div class="system-status">
+</div>
 
-            <div
-                class="status-item"
-                id="cryptStatus"
-            >
-                Checking crypt.js...
-            </div>
+</section>
 
 
-            <div
-                class="status-item"
-                id="mathStatus"
-            >
-                Checking hypermath.js...
-            </div>
+<!-- ======================================================
+     DECODED MESSAGE
+     ====================================================== -->
 
+<section class="panel">
 
-            <div
-                class="status-item"
-                id="encoderStatus"
-            >
-                Checking encoder.js...
-            </div>
+<h2>Decoded Message</h2>
 
 
-            <div
-                class="status-item"
-                id="decoderStatus"
-            >
-                Checking decoder.js...
-            </div>
+<div
+    id="decodedOutput"
+    class="output"
+>
+No decoded message yet.
+</div>
 
-        </div>
 
-    </section>
+<div class="info">
 
+<span>Recovered plaintext</span>
 
-    <footer>
+<span id="decodedCount">
+0 characters
+</span>
 
-        HyperCrypt development build
+</div>
 
-    </footer>
+</section>
+
+
+<!-- ======================================================
+     SYSTEM
+     ====================================================== -->
+
+<section class="panel">
+
+<h2>System</h2>
+
+
+<div class="system-status">
+
+<div
+    class="status-item"
+    id="cryptStatus"
+>
+Checking crypt.js...
+</div>
+
+
+<div
+    class="status-item"
+    id="mathStatus"
+>
+Checking hypermath.js...
+</div>
+
+
+<div
+    class="status-item"
+    id="encoderStatus"
+>
+Checking encoder.js...
+</div>
+
+
+<div
+    class="status-item"
+    id="decoderStatus"
+>
+Checking decoder.js...
+</div>
+
+</div>
+
+</section>
+
+
+<footer>
+
+HyperCrypt development build
+
+</footer>
 
 
 </div>
 
 
-<!-- =========================================================
-     JAVASCRIPT FILES
-     ========================================================= -->
+<!-- ======================================================
+     CORE JAVASCRIPT
+     ====================================================== -->
 
 <script src="crypt.js"></script>
 
@@ -551,9 +589,9 @@
 <script src="decoder.js"></script>
 
 
-<!-- =========================================================
+<!-- ======================================================
      INTERFACE JAVASCRIPT
-     ========================================================= -->
+     ====================================================== -->
 
 <script>
 
@@ -572,9 +610,9 @@ const passwordInput =
     );
 
 
-const encodedOutput =
+const encodedInput =
     document.getElementById(
-        "encodedOutput"
+        "encodedInput"
     );
 
 
@@ -587,6 +625,24 @@ const decodedOutput =
 const status =
     document.getElementById(
         "status"
+    );
+
+
+const messageCount =
+    document.getElementById(
+        "messageCount"
+    );
+
+
+const encodedCount =
+    document.getElementById(
+        "encodedCount"
+    );
+
+
+const decodedCount =
+    document.getElementById(
+        "decodedCount"
     );
 
 
@@ -608,46 +664,87 @@ const copyButton =
     );
 
 
-// ===========================================================
+const clearMessageButton =
+    document.getElementById(
+        "clearMessageButton"
+    );
+
+
+const clearEncodedButton =
+    document.getElementById(
+        "clearEncodedButton"
+    );
+
+
+// ==========================================================
 // SYSTEM STATUS
-// ===========================================================
+// ==========================================================
 
 
 document.getElementById(
     "cryptStatus"
 ).textContent =
     typeof HyperCrypt !== "undefined"
-        ? "✓ crypt.js"
-        : "✗ crypt.js";
+        ? "✓ crypt.js loaded"
+        : "✗ crypt.js missing";
 
 
 document.getElementById(
     "mathStatus"
 ).textContent =
     typeof HyperMath !== "undefined"
-        ? "✓ hypermath.js"
-        : "✗ hypermath.js";
+        ? "✓ hypermath.js loaded"
+        : "✗ hypermath.js missing";
 
 
 document.getElementById(
     "encoderStatus"
 ).textContent =
     typeof HyperEncoder !== "undefined"
-        ? "✓ encoder.js"
-        : "✗ encoder.js";
+        ? "✓ encoder.js loaded"
+        : "✗ encoder.js missing";
 
 
 document.getElementById(
     "decoderStatus"
 ).textContent =
     typeof HyperDecoder !== "undefined"
-        ? "✓ decoder.js"
-        : "✗ decoder.js";
+        ? "✓ decoder.js loaded"
+        : "✗ decoder.js missing";
 
 
-// ===========================================================
+// ==========================================================
+// CHARACTER COUNTERS
+// ==========================================================
+
+
+messageInput.addEventListener(
+    "input",
+    function () {
+
+        messageCount.textContent =
+            messageInput.value.length +
+            " characters";
+
+    }
+);
+
+
+encodedInput.addEventListener(
+    "input",
+    function () {
+
+        encodedCount.textContent =
+            encodedInput.value.length +
+            " characters";
+
+    }
+);
+
+
+// ==========================================================
 // ENCODE
-// ===========================================================
+// ==========================================================
 
 
 encodeButton.addEventListener(
@@ -683,7 +780,7 @@ encodeButton.addEventListener(
         try {
 
             status.textContent =
-                "Encoding...";
+                "Encoding message...";
 
 
             encodeButton.disabled = true;
@@ -696,8 +793,13 @@ encodeButton.addEventListener(
                 );
 
 
-            encodedOutput.textContent =
+            encodedInput.value =
                 encoded;
+
+
+            encodedCount.textContent =
+                encoded.length +
+                " characters";
 
 
             status.textContent =
@@ -717,15 +819,16 @@ encodeButton.addEventListener(
         } finally {
 
             encodeButton.disabled = false;
+
         }
 
     }
 );
 
 
-// ===========================================================
+// ==========================================================
 // DECODE
-// ===========================================================
+// ==========================================================
 
 
 decodeButton.addEventListener(
@@ -733,21 +836,17 @@ decodeButton.addEventListener(
     async function () {
 
         const encoded =
-            encodedOutput.textContent;
+            encodedInput.value.trim();
 
 
         const password =
             passwordInput.value;
 
 
-        if (
-            !encoded ||
-            encoded ===
-            "No encoded data yet."
-        ) {
+        if (encoded.length === 0) {
 
             status.textContent =
-                "Error: there is no encoded data.";
+                "Error: enter or paste encoded data.";
 
             return;
         }
@@ -765,7 +864,7 @@ decodeButton.addEventListener(
         try {
 
             status.textContent =
-                "Decoding...";
+                "Decoding data...";
 
 
             decodeButton.disabled = true;
@@ -782,6 +881,11 @@ decodeButton.addEventListener(
                 decoded;
 
 
+            decodedCount.textContent =
+                decoded.length +
+                " characters";
+
+
             status.textContent =
                 "Decoding complete.";
 
@@ -794,24 +898,28 @@ decodeButton.addEventListener(
             decodedOutput.textContent =
                 "Unable to decode.";
 
+            decodedCount.textContent =
+                "0 characters";
+
 
             status.textContent =
-                "Decoding error: " +
+                "Decoding failed: " +
                 error.message;
 
 
         } finally {
 
             decodeButton.disabled = false;
+
         }
 
     }
 );
 
 
-// ===========================================================
-// COPY
-// ===========================================================
+// ==========================================================
+// COPY ENCODED DATA
+// ==========================================================
 
 
 copyButton.addEventListener(
@@ -819,14 +927,10 @@ copyButton.addEventListener(
     async function () {
 
         const encoded =
-            encodedOutput.textContent;
+            encodedInput.value;
 
 
-        if (
-            !encoded ||
-            encoded ===
-            "No encoded data yet."
-        ) {
+        if (encoded.length === 0) {
 
             status.textContent =
                 "Nothing to copy.";
@@ -843,14 +947,66 @@ copyButton.addEventListener(
 
 
             status.textContent =
-                "Encoded data copied.";
+                "Encoded data copied to clipboard.";
+
 
         } catch (error) {
 
             status.textContent =
-                "Could not copy encoded data.";
+                "Could not access clipboard.";
 
         }
+
+    }
+);
+
+
+// ==========================================================
+// CLEAR MESSAGE
+// ==========================================================
+
+
+clearMessageButton.addEventListener(
+    "click",
+    function () {
+
+        messageInput.value = "";
+
+        messageCount.textContent =
+            "0 characters";
+
+
+        decodedOutput.textContent =
+            "No decoded message yet.";
+
+        decodedCount.textContent =
+            "0 characters";
+
+
+        status.textContent =
+            "Message cleared.";
+
+    }
+);
+
+
+// ==========================================================
+// CLEAR ENCODED DATA
+// ==========================================================
+
+
+clearEncodedButton.addEventListener(
+    "click",
+    function () {
+
+        encodedInput.value = "";
+
+        encodedCount.textContent =
+            "0 characters";
+
+
+        status.textContent =
+            "Encoded data cleared.";
 
     }
 );
