@@ -1,6 +1,7 @@
 "use strict";
 
 /*
+ * ============================================================
  * HYPERCRYPT
  * encoder.js
  *
@@ -10,35 +11,89 @@
  *    ↓
  * AES-256-GCM
  *    ↓
- * Encrypted bytes
- *    ↓
  * HyperMath
  *    ↓
- * Final package
+ * HyperPackage
  *    ↓
  * Base64
+ * ============================================================
  */
 
 
 class HyperEncoder {
 
+
+    // ========================================================
+    // ENCODE
+    // ========================================================
+
     static async encode(message, password) {
 
         if (typeof message !== "string") {
-            throw new Error("Message must be a string.");
+
+            throw new Error(
+                "Message must be a string."
+            );
+
         }
+
 
         if (
             typeof password !== "string" ||
             password.length === 0
         ) {
-            throw new Error("A password is required.");
+
+            throw new Error(
+                "A password is required."
+            );
+
         }
 
 
         // ----------------------------------------------------
-        // 1. Encrypt the message with AES-256-GCM
+        // Make sure required systems exist.
         // ----------------------------------------------------
+
+        if (
+            typeof HyperCrypt ===
+            "undefined"
+        ) {
+
+            throw new Error(
+                "HyperCrypt is not loaded."
+            );
+
+        }
+
+
+        if (
+            typeof HyperMath ===
+            "undefined"
+        ) {
+
+            throw new Error(
+                "HyperMath is not loaded."
+            );
+
+        }
+
+
+        if (
+            typeof HyperPackage ===
+            "undefined"
+        ) {
+
+            throw new Error(
+                "HyperPackage is not loaded."
+            );
+
+        }
+
+
+        // ====================================================
+        // STEP 1
+        // AES-256-GCM
+        // ====================================================
 
         const encrypted =
             await HyperCrypt.encrypt(
@@ -47,16 +102,19 @@ class HyperEncoder {
             );
 
 
-        // ----------------------------------------------------
-        // 2. Read the cryptographic package
-        // ----------------------------------------------------
+        // ====================================================
+        // STEP 2
+        // READ ORIGINAL CRYPT PACKAGE
+        // ====================================================
 
         let cryptPackage;
+
 
         try {
 
             const binary =
                 atob(encrypted);
+
 
             const json =
                 decodeURIComponent(
@@ -72,6 +130,7 @@ class HyperEncoder {
                         .join("")
                 );
 
+
             cryptPackage =
                 JSON.parse(json);
 
@@ -80,12 +139,14 @@ class HyperEncoder {
             throw new Error(
                 "Could not read encrypted package."
             );
+
         }
 
 
-        // ----------------------------------------------------
-        // 3. Extract ciphertext
-        // ----------------------------------------------------
+        // ====================================================
+        // STEP 3
+        // EXTRACT CIPHERTEXT
+        // ====================================================
 
         const ciphertext =
             HyperCrypt.base64ToBytes(
@@ -93,9 +154,10 @@ class HyperEncoder {
             );
 
 
-        // ----------------------------------------------------
-        // 4. Apply HyperMath
-        // ----------------------------------------------------
+        // ====================================================
+        // STEP 4
+        // HYPERMATH
+        // ====================================================
 
         const mathResult =
             HyperMath.transform(
@@ -104,48 +166,63 @@ class HyperEncoder {
             );
 
 
-        // ----------------------------------------------------
-        // 5. Replace ciphertext with HyperMath output
-        // ----------------------------------------------------
+        // ====================================================
+        // STEP 5
+        // CREATE FORMAL HYPERCRYPT PACKAGE
+        // ====================================================
 
-        cryptPackage.ciphertext =
-            HyperCrypt.bytesToBase64(
-                mathResult.data
-            );
+        const finalPackage =
+            HyperPackage.create({
+
+                ciphertext:
+                    HyperCrypt.bytesToBase64(
+                        mathResult.data
+                    ),
+
+                timestamp:
+                    cryptPackage.timestamp,
+
+                salt:
+                    cryptPackage.salt,
+
+                iv:
+                    cryptPackage.iv,
+
+                originalCiphertextLength:
+                    mathResult.originalLength,
+
+                hyperMath: {
+
+                    enabled:
+                        true,
+
+                    version:
+                        HyperMath.CONFIG.VERSION ??
+                        1,
+
+                    rounds:
+                        HyperMath.CONFIG.ROUNDS
+
+                }
+
+            });
 
 
-        cryptPackage.originalCiphertextLength =
-            mathResult.originalLength;
-
-
-        // ----------------------------------------------------
-        // 6. Record HyperMath information
-        // ----------------------------------------------------
-
-        cryptPackage.hyperMath = {
-
-            enabled: true,
-
-            version: 1,
-
-            rounds:
-                HyperMath.CONFIG.ROUNDS
-        };
-
-
-        // ----------------------------------------------------
-        // 7. Convert final package to JSON
-        // ----------------------------------------------------
+        // ====================================================
+        // STEP 6
+        // SERIALIZE
+        // ====================================================
 
         const finalJSON =
-            JSON.stringify(
-                cryptPackage
+            HyperPackage.serialize(
+                finalPackage
             );
 
 
-        // ----------------------------------------------------
-        // 8. Convert final package to Base64
-        // ----------------------------------------------------
+        // ====================================================
+        // STEP 7
+        // BASE64
+        // ====================================================
 
         const finalEncoded =
             btoa(
@@ -158,6 +235,7 @@ class HyperEncoder {
 
 
         return finalEncoded;
+
     }
 
 
@@ -167,16 +245,17 @@ class HyperEncoder {
 
     static async selfTest() {
 
-        const message =
-            "HyperCrypt encoder test.";
-
-        const password =
-            "TestPassword-123";
-
-
         console.log(
             "HyperEncoder: starting test..."
         );
+
+
+        const message =
+            "HyperCrypt encoder test.";
+
+
+        const password =
+            "TestPassword-123";
 
 
         const encoded =
@@ -186,23 +265,92 @@ class HyperEncoder {
             );
 
 
-        console.log(
-            "HyperEncoder output:"
-        );
-
-        console.log(
-            encoded
-        );
-
-
         if (
-            typeof encoded !== "string" ||
+            typeof encoded !==
+                "string" ||
+
             encoded.length === 0
         ) {
 
             throw new Error(
                 "ENCODER TEST FAILED."
             );
+
+        }
+
+
+        console.log(
+            "HyperEncoder output:"
+        );
+
+
+        console.log(
+            encoded
+        );
+
+
+        // ----------------------------------------------------
+        // Inspect package
+        // ----------------------------------------------------
+
+        try {
+
+            const binary =
+                atob(encoded);
+
+
+            const json =
+                decodeURIComponent(
+                    Array.from(binary)
+                        .map(
+                            character =>
+                                "%" +
+                                character
+                                    .charCodeAt(0)
+                                    .toString(16)
+                                    .padStart(2, "0")
+                        )
+                        .join("")
+                );
+
+
+            const packageData =
+                JSON.parse(json);
+
+
+            const inspection =
+                HyperPackage.inspect(
+                    packageData
+                );
+
+
+            console.log(
+                "HyperCrypt package:"
+            );
+
+
+            console.log(
+                inspection
+            );
+
+
+            if (
+                !inspection.valid
+            ) {
+
+                throw new Error(
+                    "PACKAGE VALIDATION FAILED."
+                );
+
+            }
+
+        } catch (error) {
+
+            throw new Error(
+                "ENCODER PACKAGE TEST FAILED: " +
+                error.message
+            );
+
         }
 
 
@@ -212,7 +360,9 @@ class HyperEncoder {
 
 
         return encoded;
+
     }
+
 }
 
 
@@ -220,4 +370,5 @@ class HyperEncoder {
 // GLOBAL ACCESS
 // ============================================================
 
-window.HyperEncoder = HyperEncoder;
+window.HyperEncoder =
+    HyperEncoder;
