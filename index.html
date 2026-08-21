@@ -2,549 +2,476 @@
 <html lang="en">
 
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HyperCrypt</title>
 
-
 <style>
-
-/* =========================================================
-   GENERAL
-   ========================================================= */
 
 * {
     box-sizing: border-box;
 }
 
-
 body {
-
     margin: 0;
-
     padding: 40px 20px;
-
-    font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
-
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     background: #080b10;
-
     color: #e8eef5;
-
     overflow-x: hidden;
 }
 
-
 .container {
-
     max-width: 1100px;
-
     margin: 0 auto;
-
     position: relative;
-
     z-index: 2;
 }
 
-
-/* =========================================================
-   BACKGROUND
-   ========================================================= */
-
 .background-grid {
-
     position: fixed;
-
     inset: 0;
-
     pointer-events: none;
-
     opacity: 0.08;
-
     background-image:
-        linear-gradient(
-            #ffffff 1px,
-            transparent 1px
-        ),
-        linear-gradient(
-            90deg,
-            #ffffff 1px,
-            transparent 1px
-        );
-
+        linear-gradient(#ffffff 1px, transparent 1px),
+        linear-gradient(90deg, #ffffff 1px, transparent 1px);
     background-size: 40px 40px;
-
-    transform:
-        perspective(500px)
-        rotateX(55deg)
-        scale(2);
-
+    transform: perspective(500px) rotateX(55deg) scale(2);
     transform-origin: center top;
 }
 
-
-/* =========================================================
-   HEADER
-   ========================================================= */
-
 header {
-
     text-align: center;
-
     margin-bottom: 35px;
 }
 
-
 h1 {
-
     margin: 0;
-
     font-size: 52px;
-
     letter-spacing: 7px;
-
     font-weight: 800;
 }
 
-
 .subtitle {
-
     margin-top: 10px;
-
     color: #8290a0;
-
     font-size: 15px;
-
     letter-spacing: 2px;
 }
 
-
-/* =========================================================
-   STATUS
-   ========================================================= */
-
 #status {
-
     padding: 14px;
-
     border-radius: 8px;
-
     background: #0e141c;
-
     border: 1px solid #26313d;
-
     margin-bottom: 20px;
-
-    font-family:
-        "SFMono-Regular",
-        Consolas,
-        monospace;
-
+    font-family: "SFMono-Regular", Consolas, monospace;
     font-size: 13px;
 }
 
-
-/* =========================================================
-   PANELS
-   ========================================================= */
-
 .panel {
-
-    background: rgba(
-        15,
-        21,
-        29,
-        0.94
-    );
-
+    background: rgba(15, 21, 29, 0.94);
     border: 1px solid #26313d;
-
     border-radius: 12px;
-
     padding: 25px;
-
     margin-bottom: 20px;
-
     backdrop-filter: blur(8px);
 }
 
-
 .panel h2 {
-
     margin-top: 0;
-
     font-size: 19px;
-
     letter-spacing: 1px;
 }
 
-
-/* =========================================================
-   INPUTS
-   ========================================================= */
-
 .field {
-
     margin-bottom: 20px;
 }
 
-
 label {
-
     display: block;
-
     margin-bottom: 8px;
-
     font-weight: 600;
 }
 
-
 textarea,
 input {
-
     width: 100%;
-
     background: #070a0e;
-
     color: #e8eef5;
-
     border: 1px solid #2c3947;
-
     border-radius: 8px;
-
     padding: 13px;
-
-    font-family:
-        "SFMono-Regular",
-        Consolas,
-        monospace;
-
+    font-family: "SFMono-Regular", Consolas, monospace;
     font-size: 14px;
-
     outline: none;
 }
 
-
 textarea {
-
     min-height: 150px;
-
     resize: vertical;
 }
 
-
 textarea:focus,
 input:focus {
-
     border-color: #70869d;
-
-    box-shadow:
-        0 0 0 2px
-        rgba(
-            112,
-            134,
-            157,
-            0.12
-        );
+    box-shadow: 0 0 0 2px rgba(112, 134, 157, 0.12);
 }
 
-
 .info {
-
     display: flex;
-
     justify-content: space-between;
-
     margin-top: 8px;
-
     color: #687687;
-
-    font-family:
-        "SFMono-Regular",
-        Consolas,
-        monospace;
-
+    font-family: "SFMono-Regular", Consolas, monospace;
     font-size: 12px;
 }
 
-
-/* =========================================================
-   BUTTONS
-   ========================================================= */
-
 .button-row {
-
     display: flex;
-
     gap: 12px;
-
     flex-wrap: wrap;
 }
 
-
 button {
-
     border: none;
-
     border-radius: 8px;
-
     padding: 12px 22px;
-
     font-size: 14px;
-
     font-weight: 700;
-
     cursor: pointer;
-
     background: #e8eef5;
-
     color: #0b0f14;
-
-    transition:
-        transform 0.15s,
-        opacity 0.15s;
+    transition: transform 0.15s, opacity 0.15s;
 }
-
 
 button:hover {
-
     opacity: 0.85;
-
-    transform:
-        translateY(-1px);
+    transform: translateY(-1px);
 }
-
 
 button:active {
-
-    transform:
-        translateY(1px);
+    transform: translateY(1px);
 }
 
-
 button:disabled {
-
     opacity: 0.45;
-
     cursor: not-allowed;
-
     transform: none;
 }
 
-
 .secondary {
-
     background: #26313d;
-
     color: #e8eef5;
 }
 
-
 .danger {
-
     background: #3a2525;
-
     color: #f0caca;
 }
 
-
-/* =========================================================
-   OUTPUT
-   ========================================================= */
-
 .output {
-
     min-height: 150px;
-
     white-space: pre-wrap;
-
     word-break: break-all;
-
     background: #070a0e;
-
     border: 1px solid #2c3947;
-
     border-radius: 8px;
-
     padding: 15px;
-
-    font-family:
-        "SFMono-Regular",
-        Consolas,
-        monospace;
-
+    font-family: "SFMono-Regular", Consolas, monospace;
     font-size: 13px;
-
     color: #b9c7d6;
 }
 
-
-/* =========================================================
-   PIPELINE
-   ========================================================= */
-
 .pipeline {
-
     display: grid;
-
-    grid-template-columns:
-        repeat(
-            6,
-            1fr
-        );
-
+    grid-template-columns: repeat(6, 1fr);
     gap: 8px;
-
     margin-top: 15px;
 }
 
-
 .pipeline-step {
-
     min-height: 95px;
-
     display: flex;
-
     flex-direction: column;
-
     justify-content: center;
-
     align-items: center;
-
     text-align: center;
-
     padding: 10px;
-
     border-radius: 9px;
-
     border: 1px solid #26313d;
-
     background: #080c11;
-
-    font-family:
-        "SFMono-Regular",
-        Consolas,
-        monospace;
-
+    font-family: "SFMono-Regular", Consolas, monospace;
     font-size: 11px;
-
-    transition:
-        border-color 0.25s,
-        background 0.25s,
-        transform 0.25s;
+    transition: border-color 0.25s, background 0.25s, transform 0.25s;
 }
 
-
 .pipeline-step .number {
-
     font-size: 10px;
-
     color: #657486;
-
     margin-bottom: 6px;
 }
 
-
 .pipeline-step.active {
-
     border-color: #dce5ee;
-
     background: #17202a;
-
-    transform:
-        translateY(-3px);
-
-    box-shadow:
-        0 0 20px
-        rgba(
-            220,
-            229,
-            238,
-            0.08
-        );
+    transform: translateY(-3px);
+    box-shadow: 0 0 20px rgba(220, 229, 238, 0.08);
 }
 
-
 .pipeline-step.complete {
-
     border-color: #687b8e;
-
     background: #111922;
 }
 
-
 .pipeline-arrow {
-
     display: none;
 }
 
-
-/* =========================================================
-   TECHNICAL INFORMATION
-   ========================================================= */
-
 .tech-grid {
-
     display: grid;
-
-    grid-template-columns:
-        repeat(
-            auto-fit,
-            minmax(190px, 1fr)
-        );
-
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
     gap: 10px;
 }
 
-
 .tech-item {
-
     padding: 14px;
-
     border-radius: 8px;
-
     background: #080c11;
-
     border: 1px solid #26313d;
 }
 
-
 .tech-label {
-
     color: #687687;
-
     font-size: 11px;
-
     text-transform: uppercase;
-
     letter-spacing: 1px;
-
     margin-bottom: 5px;
 }
 
-
 .tech-value {
-
-    font-family:
-        "SFMono-Regular",
-        Consolas,
-        monospace;
-
+    font-family: "SFMono-Regular", Consolas, monospace;
     font-size: 13px;
-
     word-break: break-word;
 }
 
-    <section class="panel">
+.system-status {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+}
+
+.status-item {
+    background: #080c11;
+    border: 1px solid #26313d;
+    border-radius: 8px;
+    padding: 12px;
+    font-family: "SFMono-Regular", Consolas, monospace;
+    font-size: 13px;
+}
+
+footer {
+    text-align: center;
+    color: #586676;
+    font-size: 12px;
+    margin-top: 30px;
+}
+
+@media (max-width: 800px) {
+    .pipeline {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    h1 {
+        font-size: 38px;
+        letter-spacing: 4px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="background-grid"></div>
+
+<div class="container">
+
+<header>
+<h1>HYPERCRYPT</h1>
+<div class="subtitle">CRYPTOGRAPHIC MESSAGE SYSTEM</div>
+</header>
+
+<div id="status">READY.</div>
+
+<section class="panel">
+<h2>Encryption Pipeline</h2>
+
+<div class="pipeline">
+
+<div class="pipeline-step" id="step1">
+<div class="number">01</div>
+MESSAGE
+</div>
+
+<div class="pipeline-step" id="step2">
+<div class="number">02</div>
+KEY DERIVATION
+</div>
+
+<div class="pipeline-step" id="step3">
+<div class="number">03</div>
+AES-256-GCM
+</div>
+
+<div class="pipeline-step" id="step4">
+<div class="number">04</div>
+HYPERMATH
+</div>
+
+<div class="pipeline-step" id="step5">
+<div class="number">05</div>
+TIMESTAMP
+</div>
+
+<div class="pipeline-step" id="step6">
+<div class="number">06</div>
+FINAL PACKAGE
+</div>
+
+</div>
+</section>
+
+<section class="panel">
+<h2>Message</h2>
+
+<div class="field">
+<label for="message">Message</label>
+
+<textarea id="message" placeholder="Enter a message..."></textarea>
+
+<div class="info">
+<span>PLAINTEXT</span>
+<span id="messageCount">0 characters</span>
+</div>
+</div>
+
+<div class="field">
+<label for="password">Password</label>
+
+<input
+    id="password"
+    type="password"
+    placeholder="Enter encryption password..."
+>
+</div>
+
+<div class="button-row">
+
+<button id="encodeButton" type="button">
+ENCODE
+</button>
+
+<button id="clearMessageButton" type="button" class="secondary">
+CLEAR MESSAGE
+</button>
+
+</div>
+</section>
+
+<section class="panel">
+<h2>Encoded Data</h2>
+
+<div class="field">
+<label for="encodedInput">Encrypted / Encoded Data</label>
+
+<textarea
+    id="encodedInput"
+    placeholder="Encoded HyperCrypt data will appear here. You can also paste encoded data here."
+></textarea>
+
+<div class="info">
+<span>BASE64 PACKAGE</span>
+<span id="encodedCount">0 characters</span>
+</div>
+</div>
+
+<div class="button-row">
+
+<button id="decodeButton" type="button">
+DECODE
+</button>
+
+<button id="copyButton" type="button" class="secondary">
+COPY
+</button>
+
+<button id="clearEncodedButton" type="button" class="danger">
+CLEAR ENCODED
+</button>
+
+</div>
+</section>
+
+<section class="panel">
+<h2>Decoded Message</h2>
+
+<div id="decodedOutput" class="output">
+No decoded message yet.
+</div>
+
+<div class="info">
+<span>RECOVERED PLAINTEXT</span>
+<span id="decodedCount">0 characters</span>
+</div>
+</section>
+
+<section class="panel">
+<h2>Cryptographic Information</h2>
+
+<div class="tech-grid">
+
+<div class="tech-item">
+<div class="tech-label">Encryption</div>
+<div class="tech-value" id="techEncryption">AES-256-GCM</div>
+</div>
+
+<div class="tech-item">
+<div class="tech-label">Key Derivation</div>
+<div class="tech-value">PBKDF2-SHA256</div>
+</div>
+
+<div class="tech-item">
+<div class="tech-label">HyperMath Rounds</div>
+<div class="tech-value" id="techRounds">--</div>
+</div>
+
+<div class="tech-item">
+<div class="tech-label">Timestamp</div>
+<div class="tech-value" id="techTimestamp">--</div>
+</div>
+
+<div class="tech-item">
+<div class="tech-label">Ciphertext Size</div>
+<div class="tech-value" id="techCipherSize">--</div>
+</div>
+
+<div class="tech-item">
+<div class="tech-label">Package Size</div>
+<div class="tech-value" id="techPackageSize">--</div>
+</div>
+
+</div>
+</section>
+
+<!-- =====================================================
+     SECURITY DIAGNOSTICS
+     This is HTML, so it must be inside <body> and before
+     the interface JavaScript that accesses these elements.
+     ===================================================== -->
+
+<section class="panel">
 
 <h2>Security Diagnostics</h2>
 
@@ -560,771 +487,74 @@ A passing test does not constitute a formal security audit.
 <div class="tech-grid">
 
 <div class="tech-item">
-
-<div class="tech-label">
-Round Trip
+<div class="tech-label">Round Trip</div>
+<div class="tech-value" id="securityRoundTrip">NOT TESTED</div>
 </div>
-
-<div
-    class="tech-value"
-    id="securityRoundTrip"
->
-NOT TESTED
-</div>
-
-</div>
-
 
 <div class="tech-item">
-
-<div class="tech-label">
-Wrong Password
+<div class="tech-label">Wrong Password</div>
+<div class="tech-value" id="securityPassword">NOT TESTED</div>
 </div>
-
-<div
-    class="tech-value"
-    id="securityPassword"
->
-NOT TESTED
-</div>
-
-</div>
-
 
 <div class="tech-item">
-
-<div class="tech-label">
-Tamper Detection
+<div class="tech-label">Tamper Detection</div>
+<div class="tech-value" id="securityTamper">NOT TESTED</div>
 </div>
-
-<div
-    class="tech-value"
-    id="securityTamper"
->
-NOT TESTED
-</div>
-
-</div>
-
 
 <div class="tech-item">
-
-<div class="tech-label">
-Randomization
-</div>
-
-<div
-    class="tech-value"
-    id="securityRandom"
->
-NOT TESTED
+<div class="tech-label">Randomization</div>
+<div class="tech-value" id="securityRandom">NOT TESTED</div>
 </div>
 
 </div>
-
-</div>
-
 
 <br>
 
-
-<button
-    id="securityTestButton"
-    type="button"
->
+<button id="securityTestButton" type="button">
 RUN SECURITY DIAGNOSTICS
 </button>
 
 </section>
 
-/* =========================================================
-   SYSTEM
-   ========================================================= */
-
-.system-status {
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(
-            auto-fit,
-            minmax(180px, 1fr)
-        );
-
-    gap: 10px;
-}
-
-
-.status-item {
-
-    background: #080c11;
-
-    border: 1px solid #26313d;
-
-    border-radius: 8px;
-
-    padding: 12px;
-
-    font-family:
-        "SFMono-Regular",
-        Consolas,
-        monospace;
-
-    font-size: 13px;
-}
-
-
-/* =========================================================
-   FOOTER
-   ========================================================= */
-
-footer {
-
-    text-align: center;
-
-    color: #586676;
-
-    font-size: 12px;
-
-    margin-top: 30px;
-}
-
-
-/* =========================================================
-   MOBILE
-   ========================================================= */
-
-@media (max-width: 800px) {
-
-    .pipeline {
-
-        grid-template-columns:
-            repeat(
-                2,
-                1fr
-            );
-    }
-
-
-    h1 {
-
-        font-size: 38px;
-
-        letter-spacing: 4px;
-    }
-}
-
-</style>
-
-</head>
-
-
-<body>
-
-
-<div class="background-grid"></div>
-
-
-<div class="container">
-
-
-<!-- =====================================================
-     HEADER
-     ===================================================== -->
-
-<header>
-
-<h1>HYPERCRYPT</h1>
-
-<div class="subtitle">
-CRYPTOGRAPHIC MESSAGE SYSTEM
-</div>
-
-</header>
-
-
-<!-- =====================================================
-     STATUS
-     ===================================================== -->
-
-<div id="status">
-READY.
-</div>
-
-
-<!-- =====================================================
-     PIPELINE
-     ===================================================== -->
-
-<section class="panel">
-
-<h2>Encryption Pipeline</h2>
-
-
-<div class="pipeline">
-
-<div
-    class="pipeline-step"
-    id="step1"
->
-
-<div class="number">
-01
-</div>
-
-MESSAGE
-
-</div>
-
-
-<div
-    class="pipeline-step"
-    id="step2"
->
-
-<div class="number">
-02
-</div>
-
-KEY DERIVATION
-
-</div>
-
-
-<div
-    class="pipeline-step"
-    id="step3"
->
-
-<div class="number">
-03
-</div>
-
-AES-256-GCM
-
-</div>
-
-
-<div
-    class="pipeline-step"
-    id="step4"
->
-
-<div class="number">
-04
-</div>
-
-HYPERMATH
-
-</div>
-
-
-<div
-    class="pipeline-step"
-    id="step5"
->
-
-<div class="number">
-05
-</div>
-
-TIMESTAMP
-
-</div>
-
-
-<div
-    class="pipeline-step"
-    id="step6"
->
-
-<div class="number">
-06
-</div>
-
-FINAL PACKAGE
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- =====================================================
-     MESSAGE
-     ===================================================== -->
-
-<section class="panel">
-
-<h2>Message</h2>
-
-
-<div class="field">
-
-<label for="message">
-Message
-</label>
-
-
-<textarea
-    id="message"
-    placeholder="Enter a message..."
-></textarea>
-
-
-<div class="info">
-
-<span>
-PLAINTEXT
-</span>
-
-<span id="messageCount">
-0 characters
-</span>
-
-</div>
-
-</div>
-
-
-<div class="field">
-
-<label for="password">
-Password
-</label>
-
-
-<input
-    id="password"
-    type="password"
-    placeholder="Enter encryption password..."
->
-
-</div>
-
-
-<div class="button-row">
-
-<button
-    id="encodeButton"
-    type="button"
->
-ENCODE
-</button>
-
-
-<button
-    id="clearMessageButton"
-    type="button"
-    class="secondary"
->
-CLEAR MESSAGE
-</button>
-
-</div>
-
-</section>
-
-
-<!-- =====================================================
-     ENCODED DATA
-     ===================================================== -->
-
-<section class="panel">
-
-<h2>Encoded Data</h2>
-
-
-<div class="field">
-
-<label for="encodedInput">
-Encrypted / Encoded Data
-</label>
-
-
-<textarea
-    id="encodedInput"
-    placeholder="Encoded HyperCrypt data will appear here. You can also paste encoded data here."
-></textarea>
-
-
-<div class="info">
-
-<span>
-BASE64 PACKAGE
-</span>
-
-<span id="encodedCount">
-0 characters
-</span>
-
-</div>
-
-</div>
-
-
-<div class="button-row">
-
-<button
-    id="decodeButton"
-    type="button"
->
-DECODE
-</button>
-
-
-<button
-    id="copyButton"
-    type="button"
-    class="secondary"
->
-COPY
-</button>
-
-
-<button
-    id="clearEncodedButton"
-    type="button"
-    class="danger"
->
-CLEAR ENCODED
-</button>
-
-</div>
-
-</section>
-
-
-<!-- =====================================================
-     DECODED MESSAGE
-     ===================================================== -->
-
-<section class="panel">
-
-<h2>Decoded Message</h2>
-
-
-<div
-    id="decodedOutput"
-    class="output"
->
-No decoded message yet.
-</div>
-
-
-<div class="info">
-
-<span>
-RECOVERED PLAINTEXT
-</span>
-
-<span id="decodedCount">
-0 characters
-</span>
-
-</div>
-
-</section>
-
-
-<!-- =====================================================
-     TECHNICAL INFORMATION
-     ===================================================== -->
-
-<section class="panel">
-
-<h2>Cryptographic Information</h2>
-
-
-<div class="tech-grid">
-
-
-<div class="tech-item">
-
-<div class="tech-label">
-Encryption
-</div>
-
-<div
-    class="tech-value"
-    id="techEncryption"
->
-AES-256-GCM
-</div>
-
-</div>
-
-
-<div class="tech-item">
-
-<div class="tech-label">
-Key Derivation
-</div>
-
-<div
-    class="tech-value"
->
-PBKDF2-SHA256
-</div>
-
-</div>
-
-
-<div class="tech-item">
-
-<div class="tech-label">
-HyperMath Rounds
-</div>
-
-<div
-    class="tech-value"
-    id="techRounds"
->
---
-</div>
-
-</div>
-
-
-<div class="tech-item">
-
-<div class="tech-label">
-Timestamp
-</div>
-
-<div
-    class="tech-value"
-    id="techTimestamp"
->
---
-</div>
-
-</div>
-
-
-<div class="tech-item">
-
-<div class="tech-label">
-Ciphertext Size
-</div>
-
-<div
-    class="tech-value"
-    id="techCipherSize"
->
---
-</div>
-
-</div>
-
-
-<div class="tech-item">
-
-<div class="tech-label">
-Package Size
-</div>
-
-<div
-    class="tech-value"
-    id="techPackageSize"
->
---
-</div>
-
-</div>
-
-
-</div>
-
-</section>
-
-// ==========================================================
-// SECURITY DIAGNOSTICS
-// ==========================================================
-
-
-const securityTestButton =
-    document.getElementById(
-        "securityTestButton"
-    );
-
-
-const securityRoundTrip =
-    document.getElementById(
-        "securityRoundTrip"
-    );
-
-
-const securityPassword =
-    document.getElementById(
-        "securityPassword"
-    );
-
-
-const securityTamper =
-    document.getElementById(
-        "securityTamper"
-    );
-
-
-const securityRandom =
-    document.getElementById(
-        "securityRandom"
-    );
-
-
-securityTestButton.addEventListener(
-    "click",
-    async function () {
-
-        securityTestButton.disabled =
-            true;
-
-
-        status.textContent =
-            "RUNNING SECURITY DIAGNOSTICS...";
-
-
-        securityRoundTrip.textContent =
-            "TESTING...";
-
-
-        securityPassword.textContent =
-            "TESTING...";
-
-
-        securityTamper.textContent =
-            "TESTING...";
-
-
-        securityRandom.textContent =
-            "TESTING...";
-
-
-        try {
-
-            const results =
-                await HyperSecurity.runAll();
-
-
-            securityRoundTrip.textContent =
-                results.roundTrip
-                    ? "✓ PASS"
-                    : "✗ FAIL";
-
-
-            securityPassword.textContent =
-                results.wrongPassword
-                    ? "✓ PASS"
-                    : "✗ FAIL";
-
-
-            securityTamper.textContent =
-                results.tamperDetection
-                    ? "✓ PASS"
-                    : "✗ FAIL";
-
-
-            securityRandom.textContent =
-                results.randomization
-                    ? "✓ PASS"
-                    : "✗ FAIL";
-
-
-            const allPassed =
-                results.roundTrip &&
-                results.wrongPassword &&
-                results.tamperDetection &&
-                results.randomization;
-
-
-            status.textContent =
-                allPassed
-                    ? "✓ ALL SECURITY DIAGNOSTICS PASSED."
-                    : "⚠ ONE OR MORE DIAGNOSTICS FAILED.";
-
-
-        } catch (error) {
-
-            console.error(error);
-
-
-            status.textContent =
-                "SECURITY DIAGNOSTICS ERROR: " +
-                error.message;
-
-        } finally {
-
-            securityTestButton.disabled =
-                false;
-
-        }
-
-    }
-);
-
-<!-- =====================================================
-     SYSTEM
-     ===================================================== -->
-
 <section class="panel">
 
 <h2>System</h2>
 
-
 <div class="system-status">
 
-
-<div
-    class="status-item"
-    id="cryptStatus"
->
+<div class="status-item" id="cryptStatus">
 Checking crypt.js...
 </div>
 
-
-<div
-    class="status-item"
-    id="mathStatus"
->
+<div class="status-item" id="mathStatus">
 Checking hypermath.js...
 </div>
 
-
-<div
-    class="status-item"
-    id="encoderStatus"
->
+<div class="status-item" id="encoderStatus">
 Checking encoder.js...
 </div>
 
-
-<div
-    class="status-item"
-    id="decoderStatus"
->
+<div class="status-item" id="decoderStatus">
 Checking decoder.js...
 </div>
 
+<div class="status-item" id="securityStatus">
+Checking security.js...
+</div>
 
 </div>
 
 </section>
 
-
 <footer>
-
 HyperCrypt development build
-
 </footer>
-
 
 </div>
 
-
 <!-- =====================================================
      CORE JAVASCRIPT
+     These files are loaded before the interface code.
      ===================================================== -->
 
 <script src="crypt.js"></script>
@@ -1341,788 +571,615 @@ HyperCrypt development build
 
 "use strict";
 
-
 // ==========================================================
 // ELEMENTS
 // ==========================================================
 
-
 const messageInput =
-    document.getElementById(
-        "message"
-    );
-
+    document.getElementById("message");
 
 const passwordInput =
-    document.getElementById(
-        "password"
-    );
-
+    document.getElementById("password");
 
 const encodedInput =
-    document.getElementById(
-        "encodedInput"
-    );
-
+    document.getElementById("encodedInput");
 
 const decodedOutput =
-    document.getElementById(
-        "decodedOutput"
-    );
-
+    document.getElementById("decodedOutput");
 
 const status =
-    document.getElementById(
-        "status"
-    );
-
+    document.getElementById("status");
 
 const messageCount =
-    document.getElementById(
-        "messageCount"
-    );
-
+    document.getElementById("messageCount");
 
 const encodedCount =
-    document.getElementById(
-        "encodedCount"
-    );
-
+    document.getElementById("encodedCount");
 
 const decodedCount =
-    document.getElementById(
-        "decodedCount"
-    );
-
+    document.getElementById("decodedCount");
 
 const encodeButton =
-    document.getElementById(
-        "encodeButton"
-    );
-
+    document.getElementById("encodeButton");
 
 const decodeButton =
-    document.getElementById(
-        "decodeButton"
-    );
-
+    document.getElementById("decodeButton");
 
 const copyButton =
-    document.getElementById(
-        "copyButton"
-    );
-
+    document.getElementById("copyButton");
 
 const clearMessageButton =
-    document.getElementById(
-        "clearMessageButton"
-    );
-
+    document.getElementById("clearMessageButton");
 
 const clearEncodedButton =
-    document.getElementById(
-        "clearEncodedButton"
-    );
-
+    document.getElementById("clearEncodedButton");
 
 // ==========================================================
 // PIPELINE ELEMENTS
 // ==========================================================
 
-
 const pipelineSteps = [
-
     document.getElementById("step1"),
-
     document.getElementById("step2"),
-
     document.getElementById("step3"),
-
     document.getElementById("step4"),
-
     document.getElementById("step5"),
-
     document.getElementById("step6")
-
 ];
-
 
 // ==========================================================
 // TECHNICAL INFORMATION
 // ==========================================================
 
-
 const techRounds =
-    document.getElementById(
-        "techRounds"
-    );
-
+    document.getElementById("techRounds");
 
 const techTimestamp =
-    document.getElementById(
-        "techTimestamp"
-    );
-
+    document.getElementById("techTimestamp");
 
 const techCipherSize =
-    document.getElementById(
-        "techCipherSize"
-    );
-
+    document.getElementById("techCipherSize");
 
 const techPackageSize =
-    document.getElementById(
-        "techPackageSize"
-    );
+    document.getElementById("techPackageSize");
 
+// ==========================================================
+// SECURITY ELEMENTS
+// These are now guaranteed to exist because their HTML
+// appears above this script.
+// ==========================================================
+
+const securityTestButton =
+    document.getElementById("securityTestButton");
+
+const securityRoundTrip =
+    document.getElementById("securityRoundTrip");
+
+const securityPassword =
+    document.getElementById("securityPassword");
+
+const securityTamper =
+    document.getElementById("securityTamper");
+
+const securityRandom =
+    document.getElementById("securityRandom");
 
 // ==========================================================
 // SYSTEM STATUS
 // ==========================================================
 
-
-document.getElementById(
-    "cryptStatus"
-).textContent =
+document.getElementById("cryptStatus").textContent =
     typeof HyperCrypt !== "undefined"
         ? "✓ crypt.js loaded"
         : "✗ crypt.js missing";
 
-
-document.getElementById(
-    "mathStatus"
-).textContent =
+document.getElementById("mathStatus").textContent =
     typeof HyperMath !== "undefined"
         ? "✓ hypermath.js loaded"
         : "✗ hypermath.js missing";
 
-
-document.getElementById(
-    "encoderStatus"
-).textContent =
+document.getElementById("encoderStatus").textContent =
     typeof HyperEncoder !== "undefined"
         ? "✓ encoder.js loaded"
         : "✗ encoder.js missing";
 
-
-document.getElementById(
-    "decoderStatus"
-).textContent =
+document.getElementById("decoderStatus").textContent =
     typeof HyperDecoder !== "undefined"
         ? "✓ decoder.js loaded"
         : "✗ decoder.js missing";
 
+document.getElementById("securityStatus").textContent =
+    typeof HyperSecurity !== "undefined"
+        ? "✓ security.js loaded"
+        : "✗ security.js missing";
 
 // ==========================================================
 // PIPELINE ANIMATION
 // ==========================================================
 
-
 function resetPipeline() {
 
-    pipelineSteps.forEach(
-        step => {
+    pipelineSteps.forEach(step => {
 
-            step.classList.remove(
-                "active"
-            );
+        step.classList.remove("active");
+        step.classList.remove("complete");
 
-            step.classList.remove(
-                "complete"
-            );
-
-        }
-    );
+    });
 }
-
 
 function activateStep(index) {
 
-    pipelineSteps.forEach(
-        (step, i) => {
+    pipelineSteps.forEach((step, i) => {
 
-            if (i < index) {
+        if (i < index) {
 
-                step.classList.remove(
-                    "active"
-                );
+            step.classList.remove("active");
+            step.classList.add("complete");
 
-                step.classList.add(
-                    "complete"
-                );
+        } else if (i === index) {
 
-            }
+            step.classList.add("active");
+            step.classList.remove("complete");
 
-            else if (i === index) {
+        } else {
 
-                step.classList.add(
-                    "active"
-                );
-
-                step.classList.remove(
-                    "complete"
-                );
-
-            }
-
-            else {
-
-                step.classList.remove(
-                    "active"
-                );
-
-                step.classList.remove(
-                    "complete"
-                );
-
-            }
+            step.classList.remove("active");
+            step.classList.remove("complete");
 
         }
-    );
-}
 
+    });
+}
 
 function completePipeline() {
 
-    pipelineSteps.forEach(
-        step => {
+    pipelineSteps.forEach(step => {
 
-            step.classList.remove(
-                "active"
-            );
+        step.classList.remove("active");
+        step.classList.add("complete");
 
-            step.classList.add(
-                "complete"
-            );
-
-        }
-    );
+    });
 }
-
 
 // ==========================================================
 // CHARACTER COUNTERS
 // ==========================================================
 
+messageInput.addEventListener("input", function () {
 
-messageInput.addEventListener(
-    "input",
-    function () {
+    messageCount.textContent =
+        messageInput.value.length + " characters";
 
-        messageCount.textContent =
-            messageInput.value.length +
-            " characters";
+});
 
-    }
-);
+encodedInput.addEventListener("input", function () {
 
+    encodedCount.textContent =
+        encodedInput.value.length + " characters";
 
-encodedInput.addEventListener(
-    "input",
-    function () {
-
-        encodedCount.textContent =
-            encodedInput.value.length +
-            " characters";
-
-    }
-);
-
+});
 
 // ==========================================================
 // ENCODE
 // ==========================================================
 
+encodeButton.addEventListener("click", async function () {
 
-encodeButton.addEventListener(
-    "click",
-    async function () {
+    const message =
+        messageInput.value;
 
-        const message =
-            messageInput.value;
+    const password =
+        passwordInput.value;
 
+    if (message.length === 0) {
 
-        const password =
-            passwordInput.value;
+        status.textContent =
+            "ERROR: ENTER A MESSAGE.";
 
+        return;
+    }
 
-        if (message.length === 0) {
+    if (password.length === 0) {
 
-            status.textContent =
-                "ERROR: ENTER A MESSAGE.";
+        status.textContent =
+            "ERROR: ENTER A PASSWORD.";
 
-            return;
-        }
+        return;
+    }
 
+    try {
 
-        if (password.length === 0) {
+        encodeButton.disabled = true;
 
-            status.textContent =
-                "ERROR: ENTER A PASSWORD.";
+        resetPipeline();
 
-            return;
-        }
+        status.textContent =
+            "PROCESSING MESSAGE...";
 
+        activateStep(0);
+
+        await new Promise(resolve =>
+            setTimeout(resolve, 150)
+        );
+
+        status.textContent =
+            "DERIVING CRYPTOGRAPHIC KEY...";
+
+        activateStep(1);
+
+        await new Promise(resolve =>
+            setTimeout(resolve, 150)
+        );
+
+        status.textContent =
+            "RUNNING AES-256-GCM...";
+
+        activateStep(2);
+
+        const encoded =
+            await HyperEncoder.encode(
+                message,
+                password
+            );
+
+        status.textContent =
+            "RUNNING HYPERMATH...";
+
+        activateStep(3);
+
+        await new Promise(resolve =>
+            setTimeout(resolve, 150)
+        );
+
+        status.textContent =
+            "RECORDING TIMESTAMP...";
+
+        activateStep(4);
+
+        await new Promise(resolve =>
+            setTimeout(resolve, 150)
+        );
+
+        status.textContent =
+            "BUILDING FINAL PACKAGE...";
+
+        activateStep(5);
+
+        await new Promise(resolve =>
+            setTimeout(resolve, 150)
+        );
+
+        encodedInput.value =
+            encoded;
+
+        encodedCount.textContent =
+            encoded.length + " characters";
 
         try {
 
-            encodeButton.disabled = true;
+            const binary =
+                atob(encoded);
 
-
-            resetPipeline();
-
-
-            // ------------------------------------------------
-            // MESSAGE
-            // ------------------------------------------------
-
-            status.textContent =
-                "PROCESSING MESSAGE...";
-
-            activateStep(0);
-
-            await new Promise(
-                resolve =>
-                    setTimeout(
-                        resolve,
-                        150
-                    )
-            );
-
-
-            // ------------------------------------------------
-            // KEY DERIVATION
-            // ------------------------------------------------
-
-            status.textContent =
-                "DERIVING CRYPTOGRAPHIC KEY...";
-
-            activateStep(1);
-
-            await new Promise(
-                resolve =>
-                    setTimeout(
-                        resolve,
-                        150
-                    )
-            );
-
-
-            // ------------------------------------------------
-            // AES
-            // ------------------------------------------------
-
-            status.textContent =
-                "RUNNING AES-256-GCM...";
-
-            activateStep(2);
-
-
-            // The actual encoder does all cryptographic work.
-
-            const encoded =
-                await HyperEncoder.encode(
-                    message,
-                    password
+            const json =
+                decodeURIComponent(
+                    Array.from(binary)
+                        .map(character =>
+                            "%" +
+                            character
+                                .charCodeAt(0)
+                                .toString(16)
+                                .padStart(2, "0")
+                        )
+                        .join("")
                 );
 
+            const packageData =
+                JSON.parse(json);
 
-            // ------------------------------------------------
-            // HYPERMATH
-            // ------------------------------------------------
+            techRounds.textContent =
+                packageData.hyperMath
+                    ? packageData.hyperMath.rounds
+                    : "--";
 
-            status.textContent =
-                "RUNNING HYPERMATH...";
+            techTimestamp.textContent =
+                packageData.timestamp || "--";
 
-            activateStep(3);
+            if (packageData.ciphertext) {
 
-            await new Promise(
-                resolve =>
-                    setTimeout(
-                        resolve,
-                        150
-                    )
-            );
-
-
-            // ------------------------------------------------
-            // TIMESTAMP
-            // ------------------------------------------------
-
-            status.textContent =
-                "RECORDING TIMESTAMP...";
-
-            activateStep(4);
-
-            await new Promise(
-                resolve =>
-                    setTimeout(
-                        resolve,
-                        150
-                    )
-            );
-
-
-            // ------------------------------------------------
-            // FINAL PACKAGE
-            // ------------------------------------------------
-
-            status.textContent =
-                "BUILDING FINAL PACKAGE...";
-
-            activateStep(5);
-
-            await new Promise(
-                resolve =>
-                    setTimeout(
-                        resolve,
-                        150
-                    )
-            );
-
-
-            encodedInput.value =
-                encoded;
-
-
-            encodedCount.textContent =
-                encoded.length +
-                " characters";
-
-
-            // ------------------------------------------------
-            // Extract technical information
-            // ------------------------------------------------
-
-            try {
-
-                const binary =
-                    atob(encoded);
-
-
-                const json =
-                    decodeURIComponent(
-                        Array.from(binary)
-                            .map(
-                                character =>
-                                    "%" +
-                                    character
-                                        .charCodeAt(0)
-                                        .toString(16)
-                                        .padStart(2, "0")
-                            )
-                            .join("")
+                const cipherBytes =
+                    HyperCrypt.base64ToBytes(
+                        packageData.ciphertext
                     );
 
-
-                const packageData =
-                    JSON.parse(json);
-
-
-                techRounds.textContent =
-                    packageData.hyperMath
-                        ? packageData.hyperMath.rounds
-                        : "--";
-
-
-                techTimestamp.textContent =
-                    packageData.timestamp ||
-                    "--";
-
-
-                if (
-                    packageData.ciphertext
-                ) {
-
-                    const cipherBytes =
-                        HyperCrypt.base64ToBytes(
-                            packageData.ciphertext
-                        );
-
-
-                    techCipherSize.textContent =
-                        cipherBytes.length +
-                        " bytes";
-
-                }
-
-
-                techPackageSize.textContent =
-                    encoded.length +
-                    " characters";
-
-
-            } catch (error) {
-
-                console.warn(
-                    "Could not read technical metadata.",
-                    error
-                );
-
+                techCipherSize.textContent =
+                    cipherBytes.length + " bytes";
             }
 
-
-            completePipeline();
-
-
-            status.textContent =
-                "✓ ENCODING COMPLETE.";
-
+            techPackageSize.textContent =
+                encoded.length + " characters";
 
         } catch (error) {
 
-            console.error(error);
-
-
-            resetPipeline();
-
-
-            status.textContent =
-                "ENCODING ERROR: " +
-                error.message;
-
-
-        } finally {
-
-            encodeButton.disabled = false;
+            console.warn(
+                "Could not read technical metadata.",
+                error
+            );
 
         }
 
+        completePipeline();
+
+        status.textContent =
+            "✓ ENCODING COMPLETE.";
+
+    } catch (error) {
+
+        console.error(error);
+
+        resetPipeline();
+
+        status.textContent =
+            "ENCODING ERROR: " +
+            error.message;
+
+    } finally {
+
+        encodeButton.disabled = false;
+
     }
-);
+
+});
 
 // ==========================================================
 // DECODE
 // ==========================================================
 
+decodeButton.addEventListener("click", async function () {
 
-decodeButton.addEventListener(
-    "click",
-    async function () {
+    const encoded =
+        encodedInput.value.trim();
 
-        const encoded =
-            encodedInput.value.trim();
+    const password =
+        passwordInput.value;
 
+    if (encoded.length === 0) {
 
-        const password =
-            passwordInput.value;
+        status.textContent =
+            "ERROR: ENTER OR PASTE ENCODED DATA.";
 
+        return;
+    }
 
-        if (encoded.length === 0) {
+    if (password.length === 0) {
 
-            status.textContent =
-                "ERROR: ENTER OR PASTE ENCODED DATA.";
+        status.textContent =
+            "ERROR: ENTER THE PASSWORD.";
 
-            return;
-        }
+        return;
+    }
 
+    try {
 
-        if (password.length === 0) {
+        decodeButton.disabled = true;
 
-            status.textContent =
-                "ERROR: ENTER THE PASSWORD.";
+        resetPipeline();
 
-            return;
-        }
+        status.textContent =
+            "READING ENCODED PACKAGE...";
 
+        activateStep(5);
 
-        try {
+        await new Promise(resolve =>
+            setTimeout(resolve, 150)
+        );
 
-            decodeButton.disabled = true;
+        status.textContent =
+            "REVERSING HYPERMATH...";
 
+        activateStep(3);
 
-            resetPipeline();
+        await new Promise(resolve =>
+            setTimeout(resolve, 150)
+        );
 
+        status.textContent =
+            "VERIFYING AES-256-GCM...";
 
-            status.textContent =
-                "READING ENCODED PACKAGE...";
+        activateStep(2);
 
-            activateStep(5);
-
-
-            await new Promise(
-                resolve =>
-                    setTimeout(
-                        resolve,
-                        150
-                    )
+        const decoded =
+            await HyperDecoder.decode(
+                encoded,
+                password
             );
 
+        decodedOutput.textContent =
+            decoded;
 
-            status.textContent =
-                "REVERSING HYPERMATH...";
+        decodedCount.textContent =
+            decoded.length + " characters";
 
-            activateStep(3);
+        completePipeline();
 
+        status.textContent =
+            "✓ DECRYPTION VERIFIED.";
 
-            await new Promise(
-                resolve =>
-                    setTimeout(
-                        resolve,
-                        150
-                    )
-            );
+    } catch (error) {
 
+        console.error(error);
 
-            status.textContent =
-                "VERIFYING AES-256-GCM...";
+        resetPipeline();
 
-            activateStep(2);
+        decodedOutput.textContent =
+            "Unable to decode.";
 
+        decodedCount.textContent =
+            "0 characters";
 
-            const decoded =
-                await HyperDecoder.decode(
-                    encoded,
-                    password
-                );
+        status.textContent =
+            "DECRYPTION FAILED: " +
+            error.message;
 
+    } finally {
 
-            decodedOutput.textContent =
-                decoded;
-
-
-            decodedCount.textContent =
-                decoded.length +
-                " characters";
-
-
-            completePipeline();
-
-
-            status.textContent =
-                "✓ DECRYPTION VERIFIED.";
-
-
-        } catch (error) {
-
-            console.error(error);
-
-
-            resetPipeline();
-
-
-            decodedOutput.textContent =
-                "Unable to decode.";
-
-
-            decodedCount.textContent =
-                "0 characters";
-
-
-            status.textContent =
-                "DECRYPTION FAILED: " +
-                error.message;
-
-
-        } finally {
-
-            decodeButton.disabled = false;
-
-        }
+        decodeButton.disabled = false;
 
     }
-);
 
+});
 
 // ==========================================================
 // COPY
 // ==========================================================
 
+copyButton.addEventListener("click", async function () {
 
-copyButton.addEventListener(
-    "click",
-    async function () {
+    const encoded =
+        encodedInput.value;
 
-        const encoded =
-            encodedInput.value;
+    if (encoded.length === 0) {
 
+        status.textContent =
+            "NOTHING TO COPY.";
 
-        if (encoded.length === 0) {
+        return;
+    }
 
-            status.textContent =
-                "NOTHING TO COPY.";
+    try {
 
-            return;
-        }
+        await navigator.clipboard.writeText(
+            encoded
+        );
 
+        status.textContent =
+            "ENCODED DATA COPIED.";
 
-        try {
+    } catch (error) {
 
-            await navigator.clipboard.writeText(
-                encoded
-            );
-
-
-            status.textContent =
-                "ENCODED DATA COPIED.";
-
-        } catch (error) {
-
-            status.textContent =
-                "COULD NOT ACCESS CLIPBOARD.";
-
-        }
+        status.textContent =
+            "COULD NOT ACCESS CLIPBOARD.";
 
     }
-);
 
+});
 
 // ==========================================================
 // CLEAR MESSAGE
 // ==========================================================
 
+clearMessageButton.addEventListener("click", function () {
 
-clearMessageButton.addEventListener(
-    "click",
-    function () {
+    messageInput.value = "";
 
-        messageInput.value = "";
+    messageCount.textContent =
+        "0 characters";
 
-        messageCount.textContent =
-            "0 characters";
+    decodedOutput.textContent =
+        "No decoded message yet.";
 
+    decodedCount.textContent =
+        "0 characters";
 
-        decodedOutput.textContent =
-            "No decoded message yet.";
+    status.textContent =
+        "MESSAGE CLEARED.";
 
-        decodedCount.textContent =
-            "0 characters";
-
-
-        status.textContent =
-            "MESSAGE CLEARED.";
-
-    }
-);
-
+});
 
 // ==========================================================
 // CLEAR ENCODED DATA
 // ==========================================================
 
+clearEncodedButton.addEventListener("click", function () {
 
-clearEncodedButton.addEventListener(
+    encodedInput.value = "";
+
+    encodedCount.textContent =
+        "0 characters";
+
+    status.textContent =
+        "ENCODED DATA CLEARED.";
+
+});
+
+// ==========================================================
+// SECURITY DIAGNOSTICS
+// ==========================================================
+
+securityTestButton.addEventListener(
     "click",
-    function () {
+    async function () {
 
-        encodedInput.value = "";
-
-        encodedCount.textContent =
-            "0 characters";
-
+        securityTestButton.disabled = true;
 
         status.textContent =
-            "ENCODED DATA CLEARED.";
+            "RUNNING SECURITY DIAGNOSTICS...";
+
+        securityRoundTrip.textContent =
+            "TESTING...";
+
+        securityPassword.textContent =
+            "TESTING...";
+
+        securityTamper.textContent =
+            "TESTING...";
+
+        securityRandom.textContent =
+            "TESTING...";
+
+        try {
+
+            const results =
+                await HyperSecurity.runAll();
+
+            securityRoundTrip.textContent =
+                results.roundTrip
+                    ? "✓ PASS"
+                    : "✗ FAIL";
+
+            securityPassword.textContent =
+                results.wrongPassword
+                    ? "✓ PASS"
+                    : "✗ FAIL";
+
+            securityTamper.textContent =
+                results.tamperDetection
+                    ? "✓ PASS"
+                    : "✗ FAIL";
+
+            securityRandom.textContent =
+                results.randomization
+                    ? "✓ PASS"
+                    : "✗ FAIL";
+
+            const allPassed =
+                results.roundTrip &&
+                results.wrongPassword &&
+                results.tamperDetection &&
+                results.randomization;
+
+            status.textContent =
+                allPassed
+                    ? "✓ ALL SECURITY DIAGNOSTICS PASSED."
+                    : "⚠ ONE OR MORE DIAGNOSTICS FAILED.";
+
+        } catch (error) {
+
+            console.error(error);
+
+            status.textContent =
+                "SECURITY DIAGNOSTICS ERROR: " +
+                error.message;
+
+        } finally {
+
+            securityTestButton.disabled = false;
+
+        }
 
     }
 );
 
-
-
-    
 </script>
 
-
 </body>
-
 </html>
