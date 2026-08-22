@@ -172,40 +172,33 @@ class HyperEncoder {
         // ====================================================
 
         const finalPackage =
-            HyperPackage.create({
+    HyperPackage.create({
 
-                ciphertext:
-                    HyperCrypt.bytesToBase64(
-                        mathResult.data
-                    ),
+        ...cryptPackage,
 
-                timestamp:
-                    cryptPackage.timestamp,
+        ciphertext:
+            HyperCrypt.bytesToBase64(
+                mathResult.data
+            ),
 
-                salt:
-                    cryptPackage.salt,
+        originalCiphertextLength:
+            mathResult.originalLength,
 
-                iv:
-                    cryptPackage.iv,
+        hyperMath: {
 
-                originalCiphertextLength:
-                    mathResult.originalLength,
+            enabled:
+                true,
 
-                hyperMath: {
+            version:
+                HyperMath.CONFIG.VERSION ??
+                1,
 
-                    enabled:
-                        true,
+            rounds:
+                HyperMath.CONFIG.ROUNDS
 
-                    version:
-                        HyperMath.CONFIG.VERSION ??
-                        1,
+        }
 
-                    rounds:
-                        HyperMath.CONFIG.ROUNDS
-
-                }
-
-            });
+    });
 
 
         // ====================================================
