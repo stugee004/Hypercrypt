@@ -1,20 +1,22 @@
 "use strict";
 
 /*
+ * ============================================================
  * HYPERCRYPT
  * decoder.js
  *
  * Reverse encoding pipeline:
  *
- * Base64 package
- *      ↓
- * Package
- *      ↓
- * Reverse HyperMath
- *      ↓
+ * Base64
+ *    ↓
+ * HyperPackage
+ *    ↓
+ * HyperMath reversal
+ *    ↓
  * AES-256-GCM
- *      ↓
- * Original message
+ *    ↓
+ * Original Message
+ * ============================================================
  */
 
 
@@ -25,13 +27,17 @@ class HyperDecoder {
     // DECODE
     // ========================================================
 
-    static async decode(encodedData, password) {
+    static async decode(encoded, password) {
 
-        if (typeof encodedData !== "string") {
+        if (
+            typeof encoded !== "string" ||
+            encoded.trim().length === 0
+        ) {
 
             throw new Error(
-                "Encoded data must be a string."
+                "Encoded data is required."
             );
+
         }
 
 
@@ -43,22 +49,67 @@ class HyperDecoder {
             throw new Error(
                 "A password is required."
             );
+
         }
 
 
         // ----------------------------------------------------
-        // 1. Decode the outer Base64 package
+        // Make sure required systems exist.
         // ----------------------------------------------------
 
-        let cryptPackage;
+        if (
+            typeof HyperCrypt ===
+            "undefined"
+        ) {
+
+            throw new Error(
+                "HyperCrypt is not loaded."
+            );
+
+        }
+
+
+        if (
+            typeof HyperMath ===
+            "undefined"
+        ) {
+
+            throw new Error(
+                "HyperMath is not loaded."
+            );
+
+        }
+
+
+        if (
+            typeof HyperPackage ===
+            "undefined"
+        ) {
+
+            throw new Error(
+                "HyperPackage is not loaded."
+            );
+
+        }
+
+
+        // ====================================================
+        // STEP 1
+        // BASE64 → JSON
+        // ====================================================
+
+        let packageJSON;
+
 
         try {
 
             const binary =
-                atob(encodedData);
+                atob(
+                    encoded.trim()
+                );
 
 
-            const json =
+            packageJSON =
                 decodeURIComponent(
                     Array.from(binary)
                         .map(
@@ -72,179 +123,214 @@ class HyperDecoder {
                         .join("")
                 );
 
+        } catch (error) {
 
-            cryptPackage =
-                JSON.parse(json);
+            throw new Error(
+                "Encoded data is not valid Base64."
+            );
+
+        }
+
+
+        // ====================================================
+        // STEP 2
+        // JSON → HYPERCRYPT PACKAGE
+        // ====================================================
+
+        let packageData;
+
+
+        try {
+
+            packageData =
+                HyperPackage.deserialize(
+                    packageJSON
+                );
 
         } catch (error) {
 
             throw new Error(
-                "The encoded data is invalid or corrupted."
+                "Invalid HyperCrypt package: " +
+                error.message
             );
+
         }
 
 
-        // ----------------------------------------------------
-        // 2. Validate package
-        // ----------------------------------------------------
+        // ====================================================
+        // STEP 3
+        // CHECK HYPERMATH
+        // ====================================================
 
         if (
-            !cryptPackage.version ||
-            !cryptPackage.algorithm ||
-            !cryptPackage.timestamp ||
-            !cryptPackage.salt ||
-            !cryptPackage.nonce ||
-            !cryptPackage.ciphertext
+            !packageData.hyperMath ||
+            packageData.hyperMath.enabled !== true
         ) {
 
             throw new Error(
-                "Invalid HyperCrypt package."
+                "This package does not contain HyperMath data."
             );
-        }
 
-
-        if (
-            cryptPackage.algorithm !==
-            "AES-256-GCM"
-        ) {
-
-            throw new Error(
-                "Unsupported encryption algorithm."
-            );
         }
 
 
         if (
-            !cryptPackage.hyperMath ||
-            !cryptPackage.hyperMath.enabled
+            packageData.hyperMath.version !==
+            HyperMath.CONFIG.VERSION &&
+            packageData.hyperMath.version !== 1
         ) {
 
             throw new Error(
-                "HyperMath information is missing."
+                "Unsupported HyperMath version."
             );
+
         }
 
 
-        // ----------------------------------------------------
-        // 3. Decode the transformed ciphertext
-        // ----------------------------------------------------
+        // ====================================================
+        // STEP 4
+        // BASE64 → TRANSFORMED CIPHERTEXT
+        // ====================================================
 
-        const transformedCiphertext =
-            HyperCrypt.base64ToBytes(
-                cryptPackage.ciphertext
+        let transformedCiphertext;
+
+
+        try {
+
+            transformedCiphertext =
+                HyperCrypt.base64ToBytes(
+                    packageData.ciphertext
+                );
+
+        } catch (error) {
+
+            throw new Error(
+                "Invalid ciphertext data."
             );
 
-
-        // ----------------------------------------------------
-        // 4. Reverse HyperMath
-        // ----------------------------------------------------
-
-        const originalLength =
-            cryptPackage.originalCiphertextLength;
+        }
 
 
-        const ciphertext =
-            HyperMath.inverseTransform(
-                transformedCiphertext,
-                cryptPackage.timestamp,
-                originalLength
+        // ====================================================
+        // STEP 5
+        // REVERSE HYPERMATH
+        // ====================================================
+
+        let originalCiphertext;
+
+
+        try {
+
+            originalCiphertext =
+                HyperMath.reverse(
+                    transformedCiphertext,
+                    packageData.timestamp,
+                    packageData.originalCiphertextLength
+                );
+
+        } catch (error) {
+
+            throw new Error(
+                "Could not reverse HyperMath: " +
+                error.message
             );
 
-
-        // ----------------------------------------------------
-        // 5. Put the original ciphertext back into the
-        // cryptographic package.
-        // ----------------------------------------------------
-
-        cryptPackage.ciphertext =
-            HyperCrypt.bytesToBase64(
-                ciphertext
-            );
+        }
 
 
-        // ----------------------------------------------------
-        // 6. Recreate the package expected by crypt.js
-        // ----------------------------------------------------
+        // ====================================================
+        // STEP 6
+        // REBUILD CRYPT PACKAGE
+        // ====================================================
 
-        const originalPackage = {
-
-            version:
-                cryptPackage.version,
-
-            algorithm:
-                cryptPackage.algorithm,
-
-            keyDerivation:
-                cryptPackage.keyDerivation,
-
-            iterations:
-                cryptPackage.iterations,
-
-            timestamp:
-                cryptPackage.timestamp,
-
-            salt:
-                cryptPackage.salt,
-
-            nonce:
-                cryptPackage.nonce,
+        const cryptPackage = {
 
             ciphertext:
-                cryptPackage.ciphertext
+                HyperCrypt.bytesToBase64(
+                    originalCiphertext
+                ),
+
+            timestamp:
+                packageData.timestamp,
+
+            salt:
+                packageData.salt,
+
+            iv:
+                packageData.iv
+
         };
 
 
-        // ----------------------------------------------------
-        // 7. Convert package back into Base64
-        // ----------------------------------------------------
+        // ====================================================
+        // STEP 7
+        // CONVERT BACK TO BASE64
+        // ====================================================
 
-        const packageJSON =
+        const cryptJSON =
             JSON.stringify(
-                originalPackage
+                cryptPackage
             );
 
 
-        const packageBase64 =
+        const cryptEncoded =
             btoa(
                 unescape(
                     encodeURIComponent(
-                        packageJSON
+                        cryptJSON
                     )
                 )
             );
 
 
-        // ----------------------------------------------------
-        // 8. Let crypt.js perform AES-256-GCM decryption
-        // ----------------------------------------------------
+        // ====================================================
+        // STEP 8
+        // AES-256-GCM DECRYPTION
+        // ====================================================
 
-        const message =
-            await HyperCrypt.decrypt(
-                packageBase64,
-                password
+        let message;
+
+
+        try {
+
+            message =
+                await HyperCrypt.decrypt(
+                    cryptEncoded,
+                    password
+                );
+
+        } catch (error) {
+
+            throw new Error(
+                "AES-256-GCM verification failed. " +
+                "The password may be incorrect or the data may have been modified."
             );
+
+        }
 
 
         return message;
+
     }
 
 
     // ========================================================
-    // FULL ROUND-TRIP TEST
+    // SELF TEST
     // ========================================================
 
     static async selfTest() {
 
-        const originalMessage =
-            "HyperCrypt round-trip test!";
+        console.log(
+            "HyperDecoder: starting test..."
+        );
+
+
+        const message =
+            "HyperCrypt decoder test.";
+
 
         const password =
             "TestPassword-123";
-
-
-        console.log(
-            "HyperDecoder: starting full test..."
-        );
 
 
         // ----------------------------------------------------
@@ -253,18 +339,9 @@ class HyperDecoder {
 
         const encoded =
             await HyperEncoder.encode(
-                originalMessage,
+                message,
                 password
             );
-
-
-        console.log(
-            "Encoded data:"
-        );
-
-        console.log(
-            encoded
-        );
 
 
         // ----------------------------------------------------
@@ -278,8 +355,32 @@ class HyperDecoder {
             );
 
 
+        // ----------------------------------------------------
+        // Compare
+        // ----------------------------------------------------
+
+        if (
+            decoded !== message
+        ) {
+
+            throw new Error(
+                "DECODER TEST FAILED: message mismatch."
+            );
+
+        }
+
+
         console.log(
-            "Decoded message:"
+            "Original:"
+        );
+
+        console.log(
+            message
+        );
+
+
+        console.log(
+            "Decoded:"
         );
 
         console.log(
@@ -287,28 +388,15 @@ class HyperDecoder {
         );
 
 
-        // ----------------------------------------------------
-        // Verify
-        // ----------------------------------------------------
-
-        if (
-            decoded !==
-            originalMessage
-        ) {
-
-            throw new Error(
-                "ROUND-TRIP TEST FAILED."
-            );
-        }
-
-
         console.log(
-            "HyperCrypt: FULL ROUND-TRIP TEST PASSED!"
+            "HyperDecoder: TEST PASSED."
         );
 
 
-        return decoded;
+        return true;
+
     }
+
 }
 
 
@@ -316,4 +404,5 @@ class HyperDecoder {
 // GLOBAL ACCESS
 // ============================================================
 
-window.HyperDecoder = HyperDecoder;
+window.HyperDecoder =
+    HyperDecoder;
