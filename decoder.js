@@ -245,21 +245,14 @@ class HyperDecoder {
 
         const cryptPackage = {
 
-            ciphertext:
-                HyperCrypt.bytesToBase64(
-                    originalCiphertext
-                ),
+    ...packageData,
 
-            timestamp:
-                packageData.timestamp,
+    ciphertext:
+        HyperCrypt.bytesToBase64(
+            originalCiphertext
+        )
 
-            salt:
-                packageData.salt,
-
-            iv:
-                packageData.iv
-
-        };
+};
 
 
         // ====================================================
