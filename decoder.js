@@ -222,7 +222,7 @@ class HyperDecoder {
         try {
 
             originalCiphertext =
-                HyperMath.reverse(
+                HyperMath.inverseTransform(
                     transformedCiphertext,
                     packageData.timestamp,
                     packageData.originalCiphertextLength
