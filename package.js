@@ -5,24 +5,17 @@
  * HYPERCRYPT
  * package.js
  *
- * HyperCrypt Package Manager
- *
- * Responsible for:
- *
- *   • Creating standardized HyperCrypt packages
- *   • Validating packages
- *   • Identifying package versions
- *   • Storing algorithm information
- *   • Preparing packages for future upgrades
+ * Formal HyperCrypt package manager.
  *
  * IMPORTANT:
+ * The cryptographic package uses:
  *
- * This file does NOT perform encryption.
+ *     salt
+ *     nonce
+ *     ciphertext
  *
- * AES-256-GCM remains responsible for encryption.
- * HyperMath remains responsible for mathematical transformation.
- *
- * package.js simply organizes the encrypted information.
+ * "nonce" must not be renamed to "iv" because crypt.js
+ * expects the field to be called nonce.
  * ============================================================
  */
 
@@ -31,7 +24,7 @@ class HyperPackage {
 
 
     // ========================================================
-    // PACKAGE INFORMATION
+    // CONFIGURATION
     // ========================================================
 
     static CONFIG = {
@@ -58,7 +51,7 @@ class HyperPackage {
 
 
     // ========================================================
-    // CREATE PACKAGE
+    // CREATE
     // ========================================================
 
     static create(options = {}) {
@@ -71,6 +64,7 @@ class HyperPackage {
             throw new Error(
                 "Package options must be an object."
             );
+
         }
 
 
@@ -82,7 +76,7 @@ class HyperPackage {
 
             salt = null,
 
-            iv = null,
+            nonce = null,
 
             originalCiphertextLength = null,
 
@@ -99,21 +93,47 @@ class HyperPackage {
             throw new Error(
                 "Package requires ciphertext."
             );
+
         }
 
 
         if (
-            typeof timestamp !== "number" &&
-            typeof timestamp !== "string"
+            typeof timestamp !== "string" &&
+            typeof timestamp !== "number"
         ) {
 
             throw new Error(
                 "Package requires a timestamp."
             );
+
         }
 
 
-        const packageData = {
+        if (
+            typeof salt !== "string" ||
+            salt.length === 0
+        ) {
+
+            throw new Error(
+                "Package requires salt."
+            );
+
+        }
+
+
+        if (
+            typeof nonce !== "string" ||
+            nonce.length === 0
+        ) {
+
+            throw new Error(
+                "Package requires nonce."
+            );
+
+        }
+
+
+        return {
 
             magic:
                 this.CONFIG.MAGIC,
@@ -130,6 +150,21 @@ class HyperPackage {
             keyDerivation:
                 this.CONFIG.KEY_DERIVATION,
 
+            timestamp:
+                timestamp,
+
+            salt:
+                salt,
+
+            nonce:
+                nonce,
+
+            ciphertext:
+                ciphertext,
+
+            originalCiphertextLength:
+                originalCiphertextLength,
+
             hyperMath: {
 
                 enabled:
@@ -143,42 +178,21 @@ class HyperPackage {
                     hyperMath?.rounds ??
                     0
 
-            },
-
-            timestamp:
-                timestamp,
-
-            salt:
-                salt,
-
-            iv:
-                iv,
-
-            ciphertext:
-                ciphertext,
-
-            originalCiphertextLength:
-                originalCiphertextLength
+            }
 
         };
 
-
-        return packageData;
     }
 
 
     // ========================================================
-    // VALIDATE PACKAGE
+    // VALIDATE
     // ========================================================
 
     static validate(packageData) {
 
         const errors = [];
 
-
-        // ----------------------------------------------------
-        // Basic object check
-        // ----------------------------------------------------
 
         if (
             typeof packageData !== "object" ||
@@ -198,10 +212,6 @@ class HyperPackage {
         }
 
 
-        // ----------------------------------------------------
-        // Magic identifier
-        // ----------------------------------------------------
-
         if (
             packageData.magic !==
             this.CONFIG.MAGIC
@@ -213,10 +223,6 @@ class HyperPackage {
 
         }
 
-
-        // ----------------------------------------------------
-        // Protocol
-        // ----------------------------------------------------
 
         if (
             packageData.protocol !==
@@ -230,10 +236,6 @@ class HyperPackage {
         }
 
 
-        // ----------------------------------------------------
-        // Version
-        // ----------------------------------------------------
-
         if (
             packageData.version !==
             this.CONFIG.VERSION
@@ -245,10 +247,6 @@ class HyperPackage {
 
         }
 
-
-        // ----------------------------------------------------
-        // Encryption algorithm
-        // ----------------------------------------------------
 
         if (
             packageData.algorithm !==
@@ -262,10 +260,6 @@ class HyperPackage {
         }
 
 
-        // ----------------------------------------------------
-        // Key derivation
-        // ----------------------------------------------------
-
         if (
             packageData.keyDerivation !==
             this.CONFIG.KEY_DERIVATION
@@ -278,14 +272,32 @@ class HyperPackage {
         }
 
 
-        // ----------------------------------------------------
-        // Ciphertext
-        // ----------------------------------------------------
+        if (
+            typeof packageData.salt !== "string" ||
+            packageData.salt.length === 0
+        ) {
+
+            errors.push(
+                "Missing salt."
+            );
+
+        }
+
 
         if (
-            typeof packageData.ciphertext !==
-            "string" ||
+            typeof packageData.nonce !== "string" ||
+            packageData.nonce.length === 0
+        ) {
 
+            errors.push(
+                "Missing nonce."
+            );
+
+        }
+
+
+        if (
+            typeof packageData.ciphertext !== "string" ||
             packageData.ciphertext.length === 0
         ) {
 
@@ -296,16 +308,9 @@ class HyperPackage {
         }
 
 
-        // ----------------------------------------------------
-        // Timestamp
-        // ----------------------------------------------------
-
         if (
-            typeof packageData.timestamp !==
-                "number" &&
-
-            typeof packageData.timestamp !==
-                "string"
+            typeof packageData.timestamp !== "string" &&
+            typeof packageData.timestamp !== "number"
         ) {
 
             errors.push(
@@ -315,14 +320,8 @@ class HyperPackage {
         }
 
 
-        // ----------------------------------------------------
-        // HyperMath
-        // ----------------------------------------------------
-
         if (
-            typeof packageData.hyperMath !==
-            "object" ||
-
+            typeof packageData.hyperMath !== "object" ||
             packageData.hyperMath === null
         ) {
 
@@ -342,6 +341,7 @@ class HyperPackage {
                 errors
 
         };
+
     }
 
 
@@ -370,6 +370,7 @@ class HyperPackage {
         return JSON.stringify(
             packageData
         );
+
     }
 
 
@@ -380,8 +381,7 @@ class HyperPackage {
     static deserialize(serialized) {
 
         if (
-            typeof serialized !==
-            "string"
+            typeof serialized !== "string"
         ) {
 
             throw new Error(
@@ -427,6 +427,7 @@ class HyperPackage {
 
 
         return packageData;
+
     }
 
 
@@ -478,14 +479,12 @@ class HyperPackage {
                 null,
 
             ciphertextLength:
-                typeof packageData?.ciphertext ===
-                    "string"
-
+                typeof packageData?.ciphertext === "string"
                     ? packageData.ciphertext.length
-
                     : 0
 
         };
+
     }
 
 
@@ -504,17 +503,14 @@ class HyperPackage {
 
 
     // ========================================================
-    // PROTOCOL CHECK
+    // PACKAGE IDENTIFICATION
     // ========================================================
 
     static isHyperCryptPackage(packageData) {
 
         return (
-            typeof packageData ===
-                "object" &&
-
+            typeof packageData === "object" &&
             packageData !== null &&
-
             packageData.magic ===
                 this.CONFIG.MAGIC
         );
@@ -540,13 +536,13 @@ class HyperPackage {
                     "TEST-CIPHERTEXT",
 
                 timestamp:
-                    Date.now(),
+                    new Date().toISOString(),
 
                 salt:
                     "TEST-SALT",
 
-                iv:
-                    "TEST-IV",
+                nonce:
+                    "TEST-NONCE",
 
                 originalCiphertextLength:
                     16,
@@ -608,12 +604,12 @@ class HyperPackage {
 
 
         if (
-            restored.version !==
-            1
+            restored.nonce !==
+            "TEST-NONCE"
         ) {
 
             throw new Error(
-                "PACKAGE TEST FAILED: version mismatch."
+                "PACKAGE TEST FAILED: nonce mismatch."
             );
 
         }
@@ -625,6 +621,7 @@ class HyperPackage {
 
 
         return true;
+
     }
 
 }
